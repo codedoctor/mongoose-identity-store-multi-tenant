@@ -21,6 +21,9 @@ StatsType =
 
 
 module.exports =OauthAppSchema = new mongoose.Schema
+      accountId:
+        type: mongoose.Schema.ObjectId
+        require: true
       name :
         type: String
       websiteUrl:

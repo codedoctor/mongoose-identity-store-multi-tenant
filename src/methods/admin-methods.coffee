@@ -22,8 +22,9 @@ module.exports = class AdminMethods
     throw new Error "oauthApps parameter is required" unless @oauthApps
     throw new Error "oauthAuth parameter is required" unless @oauthAuth
 
-  setup: (appName, username, email, password, clientId = null, secret = null, cb = ->) =>
+  setup: (accountId,appName, username, email, password, clientId = null, secret = null, cb = ->) =>
     adminUser =
+      accountId : accountId
       username : username
       password : password
       email : email
@@ -32,6 +33,7 @@ module.exports = class AdminMethods
       return cb err if err
 
       appData =
+        accountId : accountId
         name : appName
         clientId : clientId
         secret : secret

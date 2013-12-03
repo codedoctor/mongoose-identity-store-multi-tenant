@@ -10,6 +10,10 @@ pluginTimestamp = require "mongoose-plugins-timestamp"
 THe actual token. The token itself is the _id as a lowercase string
 ###
 module.exports = OauthAccessTokenSchema = new mongoose.Schema
+    accountId:
+      type: mongoose.Schema.ObjectId
+      require: true
+
     appId:
       type: Schema.ObjectId
     ###

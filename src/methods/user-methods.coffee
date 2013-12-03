@@ -28,10 +28,11 @@ module.exports = class UserMethods
     throw new Error "models parameter is required" unless @models
 
 
-  all:(offset = 0, count = 25, cb) =>
-    @models.User.count (err, totalCount) =>
+  all:(accountId,offset = 0, count = 25, cb) =>
+    accountId = new ObjectId accountId.toString()
+    @models.User.count {accountId : accountId}, (err, totalCount) =>
       return cb err if err
-      @models.User.find {}, null, { skip: offset, limit: count}, (err, items) =>
+      @models.User.find {accountId : accountId}, null, { skip: offset, limit: count}, (err, items) =>
         return cb err if err
         cb null, new PageResult(items || [], totalCount, offset, count)
 
@@ -54,10 +55,11 @@ module.exports = class UserMethods
   @param {Function} cb a callback that is invoked after completion of this method.
   @option options [String] select the space separated fields to return, which default to all.
   ###
-  getByUsernames:(usernames = [],options = {}, cb = ->) =>
+  getByUsernames:(accountId,usernames = [],options = {}, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
     usernames = _.map usernames, (x) -> x.toLowerCase()
 
-    query = @models.User.find({}).where('username').in(usernames)
+    query = @models.User.find({accountId : accountId}).where('username').in(usernames)
     query = query.select(options.select) if options.select && options.select.length > 0
 
     query.exec (err, items) =>
@@ -84,8 +86,9 @@ module.exports = class UserMethods
   @option options [String] sortOrder the sort order in mongodb syntax, which defaults to 'username'.
   @option options [String] select the space separated fields to return, which default to '_id username displayName selectedUserImage'.
   ###
-  lookup: (q,options = {}, cb = ->) =>
+  lookup: (accountId,q,options = {}, cb = ->) =>
     q = (q || '').toLowerCase().trim()
+    accountId = new ObjectId accountId.toString()
 
     options.limit or= 10
     options.sortOrder or= 'username'
@@ -94,32 +97,35 @@ module.exports = class UserMethods
     r = new RegExp("^#{q}")
 
     #
-    @models.User.find({username : r }).select(options.select).sort(options.sortOrder).limit(options.limit).exec (err, items) =>
+    @models.User.find({accountId : accountId,username : r }).select(options.select).sort(options.sortOrder).limit(options.limit).exec (err, items) =>
       return cb err if err
       items or= []
 
       cb null, new PageResult(items, items.length, 0, items.length)
 
-  getByName: (name, cb = ->) =>
+  getByName: (accountId,name, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
     name = name.toLowerCase()
-    @models.User.findOne username: name , (err, item) =>
+    @models.User.findOne {accountId : accountId,username: name }, (err, item) =>
       return cb err if err
       cb null, item
 
-  getByPrimaryEmail: (email, cb = ->) =>
+  getByPrimaryEmail: (accountId,email, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
     email = email.toLowerCase()
-    @models.User.findOne primaryEmail: email , (err, item) =>
+    @models.User.findOne {accountId : accountId,primaryEmail: email} , (err, item) =>
       return cb err if err
       cb null, item
 
-  getByNameOrId: (nameOrId, cb = ->) =>
+  getByNameOrId: (accountId,nameOrId, cb = ->) =>
     if isObjectId(nameOrId)
       @get nameOrId, cb
     else
-      @getByName nameOrId, cb
+      @getByName accountId,nameOrId, cb
 
-  patch: (usernameOrId, obj = {}, actor, cb = ->) =>
-    @getByNameOrId usernameOrId, (err, item) =>
+  patch: (accountId,usernameOrId, obj = {}, actor, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+    @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
@@ -135,8 +141,9 @@ module.exports = class UserMethods
         else
           cb null, item
 
-  delete: (usernameOrId, actor, cb = ->) =>
-    @getByNameOrId usernameOrId, (err, item) =>
+  delete: (accountId,usernameOrId, actor, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+    @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
@@ -149,8 +156,9 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  destroy: (usernameOrId, actor, cb = ->) =>
-    @getByNameOrId usernameOrId, (err, item) =>
+  destroy: (accountId,usernameOrId, actor, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+    @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
@@ -159,8 +167,9 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  setPassword: (usernameOrId, password, actor, cb = ->) =>
-    @getByNameOrId usernameOrId, (err, item) =>
+  setPassword: (accountId,usernameOrId, password, actor, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+    @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
@@ -178,16 +187,17 @@ module.exports = class UserMethods
   ###
   Looks up a user by username or email.
   ###
-  findUserByUsernameOrEmail: (usernameOrEmail, cb) =>
+  findUserByUsernameOrEmail: (accountId,usernameOrEmail, cb) =>
+    accountId = new ObjectId accountId.toString()
     usernameOrEmail = usernameOrEmail.toLowerCase()
 
-    @models.User.findOne username: usernameOrEmail , (err, item) =>
+    @models.User.findOne {accountId : accountId,username: usernameOrEmail} , (err, item) =>
       return cb err if err
       return cb(null, item) if item
 
       # Be smart, only try email if we have something that looks like an email.
 
-      @models.User.findOne primaryEmail: usernameOrEmail , (err, item) =>
+      @models.User.findOne {accountId : accountId,primaryEmail: usernameOrEmail }, (err, item) =>
         return cb err if err
         cb(null, item)
 
@@ -196,9 +206,11 @@ module.exports = class UserMethods
   cb(err) in case of non password error.
   cb(null, user) in case of user not found, password not valid, or valid user
   ###
-  validateUserByUsernameOrEmail: (usernameOrEmail, password, cb) =>
+  validateUserByUsernameOrEmail: (accountId,usernameOrEmail, password, cb) =>
+    accountId = new ObjectId accountId.toString()
     usernameOrEmail = usernameOrEmail.toLowerCase()
-    @findUserByUsernameOrEmail usernameOrEmail, (err, user) =>
+    
+    @findUserByUsernameOrEmail accountId,usernameOrEmail, (err, user) =>
       return cb err if err
       return cb(null, null) unless user
       bcrypt.compare password, user.password, (err, res) =>
@@ -219,12 +231,13 @@ module.exports = class UserMethods
   ###
   Creates a new user.
   ###
-  create: (objs = {}, cb) =>
-    #_.extendFiltered data, CREATE_FIELDS, objs
+  create: (accountId,objs = {}, cb) =>
+    accountId = new ObjectId accountId.toString()
 
     _.defaults objs, {username : null, primaryEmail : null , password : null}
     objs.primaryEmail = objs.email if objs.email && !objs.primaryEmail
     delete objs.email
+    objs.accountId = accountId
 
     user = new @models.User objs
     user.emails = [objs.primaryEmail] if objs.primaryEmail
@@ -252,12 +265,15 @@ module.exports = class UserMethods
   @param {String} v2 the secret or refresh_token, depending on the type of provider
   @param {Object} profile The profile as defined here: http://passportjs.org/guide/user-profile.html
   ###
-  getOrCreateUserFromProvider: (provider, v1, v2, profile, cb) =>
+  getOrCreateUserFromProvider: (accountId,provider, v1, v2, profile, cb) =>
     return cb(new Error("An id parameter within profile is required.")) unless profile && profile.id
+
+    accountId = new ObjectId accountId.toString()
 
     #console.log "PROFILE #{JSON.stringify(profile)} ENDPROFILE" 
 
     identityQuery =
+      accountId : accountId
       'identities.provider': provider
       'identities.key': profile.id
 
@@ -281,7 +297,7 @@ module.exports = class UserMethods
 
         pusername = profile.username || "fb#{profile.id}"
 
-        @models.User.findOne username : pusername , (err,itemXX) =>
+        @models.User.findOne {accountId : accountId,username : pusername} , (err,itemXX) =>
           return cb err if err
           isUserNameValid = !itemXX  #valid if it does not exist
 
@@ -353,6 +369,7 @@ module.exports = class UserMethods
           ###
           # TODO: Check for existance here, try to keep username
           item = new @models.User
+          item.accountId = accountId
           item.username = (if isUserNameValid then pusername else pusername + passgen.create(4)).toLowerCase()
           item.displayName = profile.displayName || item.username || pusername
           item.data =  {} #profile._json
@@ -554,9 +571,9 @@ module.exports = class UserMethods
 
   resetPasswordTokenLength = 10
 
-  resetPassword: (email,cb = ->) =>
+  resetPassword: (accountId,email,cb = ->) =>
     return cb new errors.UnprocessableEntity("email") unless email
-    @getByPrimaryEmail email, (err,user) =>
+    @getByPrimaryEmail accountId,email, (err,user) =>
       return cb err if err
       return cb new errors.NotFound("") unless user
 
@@ -571,7 +588,7 @@ module.exports = class UserMethods
         cb null,user,newToken
 
   #p0qEeKBoh25031326eefa65c0000000006TWlhZKbLjn
-  resetPasswordToken: (token,password,cb = ->) =>
+  resetPasswordToken: (accountId,token,password,cb = ->) =>
     return cb errors.UnprocessableEntity("token") unless token
     return cb errors.UnprocessableEntity("password") unless password
 

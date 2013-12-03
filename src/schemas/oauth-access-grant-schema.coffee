@@ -5,6 +5,10 @@ Schema = mongoose.Schema
 A single, one time usable, access grant.
 ###
 module.exports  = OauthAccessGrantSchema = new mongoose.Schema
+      accountId:
+        type: mongoose.Schema.ObjectId
+        require: true
+
       appId:
         type: Schema.ObjectId
 

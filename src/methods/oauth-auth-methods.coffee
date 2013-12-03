@@ -34,6 +34,7 @@ module.exports = class OauthAuthMethods
   @param {string} appKey the application key to retrieve the app for.
   ###
   appForClientId:(clientId, cb) =>
+    accountId = new ObjectId accountId.toString()
     return cb new Error("clientId parameter missing in appForClientId") unless clientId
 
     @models.OauthApp.findOne 'clients.clientId' : clientId, (err, item) =>

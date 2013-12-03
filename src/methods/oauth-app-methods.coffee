@@ -12,8 +12,10 @@ module.exports = class OauthAppMethods
     throw new Error("models parameter is required") unless @models
     throw new Error("scopeMethods parameter is required") unless @scopeMethods
 
-  create:(objs = {}, actor, cb) =>
+  create:(accountId,objs = {}, actor, cb) =>
     throw new Error("actor parameter is required") unless actor
+
+    objs.accountId = new ObjectId accountId.toString()
 
     optionalClientId = objs.clientId
     optionalSecret = objs.secret
@@ -38,10 +40,12 @@ module.exports = class OauthAppMethods
       cb(null, model)
 
 
-  all:(offset = 0, count = 25, cb) =>
-    @models.OauthApp.count (err, totalCount) =>
+  all:(accountId,offset = 0, count = 25, cb) =>
+    accountId = new ObjectId accountId.toString()
+
+    @models.OauthApp.count {accountId : accountId},(err, totalCount) =>
       return cb err if err
-      @models.OauthApp.find {}, null, { skip: offset, limit: count}, (err, items) =>
+      @models.OauthApp.find {accountId : accountId}, null, { skip: offset, limit: count}, (err, items) =>
         return cb err if err
         cb null, new PageResult(items || [], totalCount, offset, count)
 

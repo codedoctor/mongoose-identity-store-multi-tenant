@@ -12,15 +12,16 @@ module.exports = class RoleMethods
 
   constructor:(@models) ->
 
-  all: (options = {},cb = ->) =>
+  all: (accountId,options = {},cb = ->) =>
+    accountId = new ObjectId accountId.toString()
 
-    @models.Role.count  {}, (err, totalCount) =>
+    @models.Role.count {accountId : accountId}, (err, totalCount) =>
       return cb err if err
 
       options.offset or= 0
       options.count or= 1000
 
-      query = @models.Role.find({})
+      query = @models.Role.find({accountId : accountId})
       query.sort('name')
       query.select options.select if options.select && options.select.length > 0
 
@@ -33,15 +34,13 @@ module.exports = class RoleMethods
   ###
   Create a new processDefinition
   ###
-  create:(objs = {}, options = {}, cb = ->) =>
-    data = {}
+  create:(accountId,objs = {}, options = {}, cb = ->) =>
+    objs.accountId = new ObjectId accountId.toString()
 
-    _.extendFiltered data, CREATE_FIELDS, objs
-
-    model = new @models.Role(data)
+    model = new @models.Role(objs)
     model.save (err) =>
       return cb err if err
-      cb(null, model,true)
+      cb null, model,true
 
   ###
   Retrieve a single processDefinition-item through it's id

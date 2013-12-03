@@ -1,6 +1,9 @@
 mongoose = require 'mongoose'
 
 module.exports = RoleSchema = new mongoose.Schema
+  accountId:
+    type: mongoose.Schema.ObjectId
+    require: true
   name:
     type : String
     unique: true

@@ -33,17 +33,20 @@ module.exports = class EntityMethods
         cb null, item
 
 
-  getByName: (name, cb = ->) =>
-      @models.User.findOne username: name , (err, item) =>
+  getByName: (accountId,name, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+    @models.User.findOne {accountId : accountId, username: name} , (err, item) =>
+      return cb err if err
+      return cb null, item if item
+      @models.Organization.findOne name: name , (err, item) =>
         return cb err if err
-        return cb null, item if item
-        @models.Organization.findOne name: name , (err, item) =>
-          return cb err if err
-          cb null, item
+        cb null, item
 
-  getByNameOrId: (nameOrId, cb = ->) =>
+  getByNameOrId: (accountId,nameOrId, cb = ->) =>
+    accountId = new ObjectId accountId.toString()
+
     if isObjectId(nameOrId)
       @get nameOrId, cb
     else
-      @getByName nameOrId, cb
+      @getByName accountId,nameOrId, cb
 

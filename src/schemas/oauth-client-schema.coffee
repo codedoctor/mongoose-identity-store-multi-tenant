@@ -3,6 +3,9 @@ Schema = mongoose.Schema
 passgen = require 'passgen'
 
 module.exports = OauthClientSchema = new mongoose.Schema
+    accountId:
+      type: mongoose.Schema.ObjectId
+      require: true
     clientId:
       type: String
       unique: true

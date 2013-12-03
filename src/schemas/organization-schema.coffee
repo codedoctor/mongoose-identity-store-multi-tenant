@@ -22,6 +22,9 @@ OrganizationLinkType =
     type : String
 
 module.exports = OrganizationSchema = new mongoose.Schema
+    accountId:
+      type: mongoose.Schema.ObjectId
+      require: true
     name:
       type : String
       unique: true

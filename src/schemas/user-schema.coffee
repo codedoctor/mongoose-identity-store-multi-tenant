@@ -19,6 +19,9 @@ UserImageSchema = require './user-image-schema'
 
 
 module.exports = UserSchema = new mongoose.Schema
+  accountId:
+    type: mongoose.Schema.ObjectId
+    require: true
   username:
     type : String
 
