@@ -6,6 +6,7 @@ module.exports = OauthClientSchema = new mongoose.Schema
     accountId:
       type: mongoose.Schema.ObjectId
       require: true
+      index : true
     clientId:
       type: String
       unique: true
@@ -21,6 +22,8 @@ module.exports = OauthClientSchema = new mongoose.Schema
       type: Date
       default:() -> null
   , strict : true
+
+OauthClientSchema.index({ accountId: 1,name: 1 },{ unique: true, sparse: false} );
 
 OauthClientSchema.methods.toRest = (baseUrl, actor) ->
   res =

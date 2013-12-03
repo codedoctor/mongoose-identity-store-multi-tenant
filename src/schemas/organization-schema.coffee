@@ -25,9 +25,9 @@ module.exports = OrganizationSchema = new mongoose.Schema
     accountId:
       type: mongoose.Schema.ObjectId
       require: true
+      index: true
     name:
       type : String
-      unique: true
       trim : true
       required: true
       match: /.{2,40}/
@@ -47,6 +47,9 @@ module.exports = OrganizationSchema = new mongoose.Schema
       type: mongoose.Schema.Types.Mixed
       default : () -> {}
   , strict: true
+
+OrganizationSchema.index({ accountId: 1,name: 1 },{ unique: true, sparse: false} );
+
 
 OrganizationSchema.plugin pluginTimestamp.timestamps
 OrganizationSchema.plugin pluginCreatedBy.createdBy, isRequired : true

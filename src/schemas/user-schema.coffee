@@ -22,6 +22,7 @@ module.exports = UserSchema = new mongoose.Schema
   accountId:
     type: mongoose.Schema.ObjectId
     require: true
+    index: true
   username:
     type : String
 
@@ -103,8 +104,8 @@ module.exports = UserSchema = new mongoose.Schema
       validTill : Date
  , strict: true
 
-UserSchema.path('username').index({ unique: true, sparse: false})
-UserSchema.path('primaryEmail').index({ unique: true, sparse: true })
+UserSchema.index({ accountId: 1,username: 1 },{ unique: true, sparse: false} );
+UserSchema.index({ accountId: 1,primaryEmail: 1 },{ unique: true, sparse: true} );
 
 UserSchema.plugin pluginTimestamp.timestamps
 UserSchema.plugin pluginDeleteParanoid.deleteParanoid

@@ -20,10 +20,11 @@ StatsType =
     default : 0
 
 
-module.exports =OauthAppSchema = new mongoose.Schema
+module.exports = OauthAppSchema = new mongoose.Schema
       accountId:
         type: mongoose.Schema.ObjectId
         require: true
+        index: true
       name :
         type: String
       websiteUrl:
