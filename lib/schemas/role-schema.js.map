@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "role-schema.js",
+  "sourceRoot": "../../src/schemas/",
+  "sources": [
+    "role-schema.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;CAAA,KAAA,cAAA;;CAAA,CAAA,CAAW,IAAA,CAAX,EAAW;;CAAX,CAEA,CAAiB,CAAiB,EAA5B,CAAN,CAA0C,EAAzB;CACf,CACE,EADF;CACE,CAAO,EAAP,EAAA;CAAA,CACQ,EADR,EACA;MAFF;CAAA,CAIE,EADF,OAAA;CACE,CAAO,EAAP,EAAA;MAJF;CAAA,CAME,EADF,MAAA;CACE,CAAO,EAAP,EAAA,CAAA;CAAA,CACS,GADT,CACA,GAAA;MAPF;CAHF,GAEkC;CAFlC"
+}
