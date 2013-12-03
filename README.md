@@ -1,6 +1,5 @@
 TODO:
 
-* update index definitions.
 * fix auth token stuff, look into passports support for it
 * improve code base to our current standards
 * provide a hook to customize the schemas???
