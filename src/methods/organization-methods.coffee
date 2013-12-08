@@ -24,7 +24,11 @@ module.exports = class OrganizationMethods
   constructor:(@models) ->
     throw new Error "models parameter is required" unless @models
 
-  all:(offset = 0, count = 25, cb) =>
+  all:(offset = 0, count = 25, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.Organization.count (err, totalCount) =>
       return cb err if err
       @models.Organization.find {}, null, { skip: offset, limit: count}, (err, items) =>
@@ -34,18 +38,31 @@ module.exports = class OrganizationMethods
   ###
   Looks up a user by id.
   ###
-  get: (id, cb = ->) =>
+  get: (id, options =  {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     id = new ObjectId id.toString()
     @models.Organization.findOne _id: id , (err, item) =>
       return cb err if err
       cb null, item
 
-  getByName: (name, cb = ->) =>
+  getByName: (accountId, name, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.Organization.findOne name: name , (err, item) =>
       return cb err if err
       cb null, item
 
-  getByNameOrId: (nameOrId, cb = ->) =>
+  getByNameOrId: (accountId, nameOrId, options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
+
     if isObjectId(nameOrId)
       @get nameOrId, cb
     else

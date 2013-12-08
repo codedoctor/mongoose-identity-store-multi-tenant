@@ -13,6 +13,10 @@ module.exports = class RoleMethods
   constructor:(@models) ->
 
   all: (accountId,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
 
     @models.Role.count {accountId : accountId}, (err, totalCount) =>
@@ -35,6 +39,10 @@ module.exports = class RoleMethods
   Create a new processDefinition
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     objs.accountId = new ObjectId accountId.toString()
 
     model = new @models.Role(objs)
@@ -46,11 +54,19 @@ module.exports = class RoleMethods
   Retrieve a single processDefinition-item through it's id
   ###
   get: (roleId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.Role.findOne _id : roleId, (err,item) =>
       return cb err if err
       cb null, item
 
   patch: (roleId, obj = {}, options={}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.Role.findOne _id : roleId, (err,item) =>
       return cb err if err
       return cb new errors.NotFound("#{roleId}") unless item
@@ -61,6 +77,10 @@ module.exports = class RoleMethods
         cb null, item
 
   destroy: (roleId, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.Role.findOne _id : roleId, (err,item) =>
       return cb err if err
       return cb null unless item

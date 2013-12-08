@@ -52,7 +52,7 @@ OrganizationSchema.index({ accountId: 1,name: 1 },{ unique: true, sparse: false}
 
 
 OrganizationSchema.plugin pluginTimestamp.timestamps
-OrganizationSchema.plugin pluginCreatedBy.createdBy, isRequired : true
+OrganizationSchema.plugin pluginCreatedBy.createdBy,{isRequired : false, v:2, keepV1 : false}
 OrganizationSchema.plugin pluginTagsSimple.tagsSimple
 OrganizationSchema.plugin pluginDeleteParanoid.deleteParanoid
 OrganizationSchema.plugin pluginAccessibleBy.accessibleBy, defaultIsPublic : true

@@ -79,7 +79,7 @@ module.exports = OauthAppSchema = new mongoose.Schema
   , strict: true
 
 OauthAppSchema.plugin pluginTimestamp.timestamps
-OauthAppSchema.plugin pluginCreatedBy.createdBy, isRequired : false
+OauthAppSchema.plugin pluginCreatedBy.createdBy, {isRequired : false, v:2, keepV1 : false}
 OauthAppSchema.plugin pluginDeleteParanoid.deleteParanoid
 OauthAppSchema.plugin pluginTagsSimple.tagsSimple
 OauthAppSchema.plugin pluginAccessibleBy.accessibleBy, defaultIsPublic : false

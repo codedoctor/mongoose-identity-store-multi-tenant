@@ -12,7 +12,11 @@ module.exports = class OauthAppMethods
     throw new Error("models parameter is required") unless @models
     throw new Error("scopeMethods parameter is required") unless @scopeMethods
 
-  create:(accountId,objs = {}, actor, cb) =>
+  create:(accountId,objs = {}, actor,options={}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     throw new Error("actor parameter is required") unless actor
 
     objs.accountId = new ObjectId accountId.toString()
@@ -40,7 +44,11 @@ module.exports = class OauthAppMethods
       cb(null, model)
 
 
-  all:(accountId,offset = 0, count = 25, cb) =>
+  all:(accountId,offset = 0, count = 25,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
 
     @models.OauthApp.count {accountId : accountId},(err, totalCount) =>
@@ -49,7 +57,11 @@ module.exports = class OauthAppMethods
         return cb err if err
         cb null, new PageResult(items || [], totalCount, offset, count)
 
-  getAppsForUser:(owningUserId, offset = 0, count = 25, cb) =>
+  getAppsForUser:(owningUserId, offset = 0, count = 25,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     owningUserId = owningUserId.toString()
     @models.OauthApp.find( 'createdBy.actorId' : owningUserId).count (err, totalCount) =>
       return cb err if err
@@ -57,20 +69,35 @@ module.exports = class OauthAppMethods
         return cb err if err
         cb null, new PageResult(items || [], totalCount, offset, count)
 
-  getApp: (oauthAppId, cb) =>
+  getApp: (oauthAppId,options={}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
     @models.OauthApp.findOne _id : oauthAppId, (err, item) =>
       return cb err if err
       cb(null, item)
 
-  delete: (oauthAppId, cb) =>
+  delete: (oauthAppId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @deleteApp(oauthAppId, cb)
 
-  deleteApp: (oauthAppId, cb) =>
+  deleteApp: (oauthAppId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.OauthApp.remove _id : oauthAppId, (err) =>
       return cb err if err
       cb(null)
 
-  resetAppKeys: (oauthAppId, cb) =>
+  resetAppKeys: (oauthAppId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.OauthApp.findOne _id : oauthAppId, (err, item) =>
       return cb err if err
 
@@ -81,11 +108,19 @@ module.exports = class OauthAppMethods
         return cb err if err
         cb(null, item)
 
-  update: (oauthAppId, data = {}, cb) =>
+  update: (oauthAppId, data = {}, options =  {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @updateApp(oauthAppId, data, cb)
 
 
-  updateApp: (oauthAppId, data = {}, cb) =>
+  updateApp: (oauthAppId, data = {},options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.OauthApp.findOne _id : oauthAppId, (err, item) =>
       return cb err if err
 

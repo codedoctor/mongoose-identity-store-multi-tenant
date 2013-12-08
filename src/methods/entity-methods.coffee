@@ -23,7 +23,11 @@ module.exports = class EntityMethods
   ###
   Looks up a user or organization by id. Users are first.
   ###
-  get: (id, cb = ->) =>
+  get: (id,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     id = new ObjectId id.toString()
     @models.User.findOne _id: id , (err, item) =>
       return cb err if err
@@ -33,7 +37,11 @@ module.exports = class EntityMethods
         cb null, item
 
 
-  getByName: (accountId,name, cb = ->) =>
+  getByName: (accountId,name,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @models.User.findOne {accountId : accountId, username: name} , (err, item) =>
       return cb err if err
@@ -42,7 +50,11 @@ module.exports = class EntityMethods
         return cb err if err
         cb null, item
 
-  getByNameOrId: (accountId,nameOrId, cb = ->) =>
+  getByNameOrId: (accountId,nameOrId, options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
 
     if isObjectId(nameOrId)

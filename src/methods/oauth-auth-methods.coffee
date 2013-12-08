@@ -33,7 +33,11 @@ module.exports = class OauthAuthMethods
   Retrieves an app for a key. This ONLY retrieves active keys
   @param {string} appKey the application key to retrieve the app for.
   ###
-  appForClientId:(clientId, cb) =>
+  appForClientId:(clientId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     return cb new Error("clientId parameter missing in appForClientId") unless clientId
 
@@ -47,7 +51,11 @@ module.exports = class OauthAuthMethods
   has an expiration higher than now.
   isClientValid can be checked for tighter security.
   ###
-  validate: (token, clientId, cb) =>
+  validate: (token, clientId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     # TODO: APP/CLient shit
     @models.OauthAccessToken.findOne _id : token, (err, item) =>
       return cb err  if err
@@ -74,7 +82,11 @@ module.exports = class OauthAuthMethods
   @param {String} realm an optional realm for which this access grant is for.
   @param {Callback} cb the callback that will be invoked, with err and the mongoose AccessGrant model.
   ###
-  createAccessGrant: (appId, userId, redirectUrl, scope, realm = null, cb) =>
+  createAccessGrant: (appId, userId, redirectUrl, scope, realm = null, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb new Error("userId parameter missing in createAccessGrant") unless userId
     return cb new Error("appId parameter missing in createAccessGrant") unless appId
     return cb new Error("redirectUrl parameter missing in createAccessGrant") unless redirectUrl
@@ -95,15 +107,22 @@ module.exports = class OauthAuthMethods
   ###
   Creates a token for a user/app/realm
   ###
-  createOrReuseTokenForUserId: (userId, clientId, realm, scope , expiresIn, cb) =>
+  createOrReuseTokenForUserId: (userId, clientId, realm, scope , expiresIn,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @createTokenForUserId userId, clientId, realm, scope, expiresIn, cb
 
 
   ###
   Creates a token for a user/app/realm
   ###
-  createTokenForUserId: (userId, clientId, realm =  null, scope = null, expiresIn = null, cb) =>
-    #console.log "Looking up App for ClientId: #{clientId}"
+  createTokenForUserId: (userId, clientId, realm =  null, scope = null, expiresIn = null, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @appForClientId clientId, (err, app) =>
       return cb err if err
       return cb new Error("Could not find app for clientId #{clientId}") unless app
@@ -123,7 +142,11 @@ module.exports = class OauthAuthMethods
   Takes a code and exchanges it for an access token
   @param {String} code the authorization_code to exchange into an access token
   ###
-  exchangeAuthorizationCodeForAccessToken: (code, cb) =>
+  exchangeAuthorizationCodeForAccessToken: (code,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.OauthAccessGrant.findOne _id: code, (err, accessGrant) =>
       return cb err if err
       return cb(new Error("NOT FOUND")) unless accessGrant
@@ -151,7 +174,11 @@ module.exports = class OauthAuthMethods
   Takes a code and exchanges it for an access token
   @param {String} refreshToken the refresh_token to exchange into an access token
   ###
-  exchangeRefreshTokenForAccessToken: (refreshToken, cb) =>
+  exchangeRefreshTokenForAccessToken: (refreshToken, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     @models.OauthAccessToken.findOne refreshToken: refreshToken, (err, token) =>
       return cb err if err
       return cb(new Error("NOT FOUND 2")) unless token # DO some shit

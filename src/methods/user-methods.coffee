@@ -28,7 +28,11 @@ module.exports = class UserMethods
     throw new Error "models parameter is required" unless @models
 
 
-  all:(accountId,offset = 0, count = 25, cb) =>
+  all:(accountId,offset = 0, count = 25, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @models.User.count {accountId : accountId}, (err, totalCount) =>
       return cb err if err
@@ -39,7 +43,11 @@ module.exports = class UserMethods
   ###
   Retrieves users by passing a list of id's, which can be string or objectIds
   ###
-  getByIds:(idList = [], cb) =>
+  getByIds:(idList = [], options =  {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     idList = _.map idList, (x) -> new ObjectId x.toString()
 
     @models.User.find({}).where('_id').in(idList).exec (err, items) =>
@@ -56,6 +64,10 @@ module.exports = class UserMethods
   @option options [String] select the space separated fields to return, which default to all.
   ###
   getByUsernames:(accountId,usernames = [],options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     usernames = _.map usernames, (x) -> x.toLowerCase()
 
@@ -71,7 +83,11 @@ module.exports = class UserMethods
   ###
   Looks up a user by id.
   ###
-  get: (id, cb = ->) =>
+  get: (id,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     id = new ObjectId id.toString()
     @models.User.findOne _id: id , (err, item) =>
       return cb err if err
@@ -87,6 +103,10 @@ module.exports = class UserMethods
   @option options [String] select the space separated fields to return, which default to '_id username displayName selectedUserImage'.
   ###
   lookup: (accountId,q,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     q = (q || '').toLowerCase().trim()
     accountId = new ObjectId accountId.toString()
 
@@ -103,27 +123,44 @@ module.exports = class UserMethods
 
       cb null, new PageResult(items, items.length, 0, items.length)
 
-  getByName: (accountId,name, cb = ->) =>
+  getByName: (accountId,name,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     name = name.toLowerCase()
     @models.User.findOne {accountId : accountId,username: name }, (err, item) =>
       return cb err if err
       cb null, item
 
-  getByPrimaryEmail: (accountId,email, cb = ->) =>
+  getByPrimaryEmail: (accountId,email, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     email = email.toLowerCase()
     @models.User.findOne {accountId : accountId,primaryEmail: email} , (err, item) =>
       return cb err if err
       cb null, item
 
-  getByNameOrId: (accountId,nameOrId, cb = ->) =>
+  getByNameOrId: (accountId,nameOrId,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
+
     if isObjectId(nameOrId)
       @get nameOrId, cb
     else
       @getByName accountId,nameOrId, cb
 
-  patch: (accountId,usernameOrId, obj = {}, actor, cb = ->) =>
+  patch: (accountId,usernameOrId, obj = {}, actor,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator
@@ -141,7 +178,11 @@ module.exports = class UserMethods
         else
           cb null, item
 
-  delete: (accountId,usernameOrId, actor, cb = ->) =>
+  delete: (accountId,usernameOrId, actor,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
@@ -156,7 +197,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  destroy: (accountId,usernameOrId, actor, cb = ->) =>
+  destroy: (accountId,usernameOrId, actor, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
@@ -167,7 +212,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  setPassword: (accountId,usernameOrId, password, actor, cb = ->) =>
+  setPassword: (accountId,usernameOrId, password, actor,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     @getByNameOrId accountId,usernameOrId, (err, item) =>
       # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
@@ -176,7 +225,7 @@ module.exports = class UserMethods
       # TODO: Handle deleted
       #return cb null if item.isDeleted
 
-      @hashPassword password, (err, hash) =>
+      @_hashPassword password, (err, hash) =>
         return cb err if err
         item.password = hash
 
@@ -187,7 +236,11 @@ module.exports = class UserMethods
   ###
   Looks up a user by username or email.
   ###
-  findUserByUsernameOrEmail: (accountId,usernameOrEmail, cb) =>
+  findUserByUsernameOrEmail: (accountId,usernameOrEmail, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     usernameOrEmail = usernameOrEmail.toLowerCase()
 
@@ -206,7 +259,11 @@ module.exports = class UserMethods
   cb(err) in case of non password error.
   cb(null, user) in case of user not found, password not valid, or valid user
   ###
-  validateUserByUsernameOrEmail: (accountId,usernameOrEmail, password, cb) =>
+  validateUserByUsernameOrEmail: (accountId,usernameOrEmail, password, options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
     usernameOrEmail = usernameOrEmail.toLowerCase()
     
@@ -221,7 +278,7 @@ module.exports = class UserMethods
   #verifyPassword: (hash)
   #bcrypt.compare("B4c0/\/", hash, function(err, res)
 
-  hashPassword: (password, cb) =>
+  _hashPassword: (password, cb) =>
     bcrypt.genSalt 10, (err, salt) =>
       return cb err if err
       bcrypt.hash password, salt, (err, hash) =>
@@ -231,7 +288,11 @@ module.exports = class UserMethods
   ###
   Creates a new user.
   ###
-  create: (accountId,objs = {}, cb) =>
+  create: (accountId,objs = {},options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     accountId = new ObjectId accountId.toString()
 
     _.defaults objs, {username : null, primaryEmail : null , password : null}
@@ -248,7 +309,7 @@ module.exports = class UserMethods
 
     ###
     #email
-    @hashPassword objs.password, (err, hash) =>
+    @_hashPassword objs.password, (err, hash) =>
       return cb err if err
       user.password = hash
 
@@ -265,7 +326,11 @@ module.exports = class UserMethods
   @param {String} v2 the secret or refresh_token, depending on the type of provider
   @param {Object} profile The profile as defined here: http://passportjs.org/guide/user-profile.html
   ###
-  getOrCreateUserFromProvider: (accountId,provider, v1, v2, profile, cb) =>
+  getOrCreateUserFromProvider: (accountId,provider, v1, v2, profile,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb(new Error("An id parameter within profile is required.")) unless profile && profile.id
 
     accountId = new ObjectId accountId.toString()
@@ -495,7 +560,11 @@ module.exports = class UserMethods
   @param {String} v2 the secret or refresh_token, depending on the type of provider
   @param {Object} profile The profile as defined here: http://passportjs.org/guide/user-profile.html
   ###
-  addIdentityToUser: (userId,provider, v1, v2, profile, cb = ->) =>
+  addIdentityToUser: (userId,provider, v1, v2, profile,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb new Error("A userId is required")  unless userId
     return cb new Error("A provider is required")  unless provider
     return cb new Error("A v1 is required")  unless v1
@@ -526,7 +595,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item,newIdentity
 
-  removeIdentityFromUser:(userId,identityId,cb = ->) =>
+  removeIdentityFromUser:(userId,identityId,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb new Error("A userId is required")  unless userId
     return cb new Error("A identityId is required")  unless identityId
     userId = new ObjectId(userId.toString())
@@ -543,7 +616,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  addRoles:(userId,roles,cb = ->) =>
+  addRoles:(userId,roles,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb errors.UnprocessableEntity("userId") unless userId
     return cb errors.UnprocessableEntity("roles") unless roles && roles.length > 0
     userId = new ObjectId(userId.toString())
@@ -556,7 +633,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null,item.roles, item
 
-  removeRoles:(userId,roles,cb = ->) =>
+  removeRoles:(userId,roles,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb errors.UnprocessableEntity("userId") unless userId
     return cb errors.UnprocessableEntity("roles") unless roles && roles.length > 0
     userId = new ObjectId(userId.toString())
@@ -571,7 +652,11 @@ module.exports = class UserMethods
 
   resetPasswordTokenLength = 10
 
-  resetPassword: (accountId,email,cb = ->) =>
+  resetPassword: (accountId,email,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb new errors.UnprocessableEntity("email") unless email
     @getByPrimaryEmail accountId,email, (err,user) =>
       return cb err if err
@@ -588,13 +673,17 @@ module.exports = class UserMethods
         cb null,user,newToken
 
   #p0qEeKBoh25031326eefa65c0000000006TWlhZKbLjn
-  resetPasswordToken: (accountId,token,password,cb = ->) =>
+  resetPasswordToken: (accountId,token,password,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb errors.UnprocessableEntity("token") unless token
     return cb errors.UnprocessableEntity("password") unless password
 
     userId = token.substr(resetPasswordTokenLength,token.length - 2 * resetPasswordTokenLength)
     userId = new ObjectId(userId)
-    @hashPassword password, (err, hash) =>
+    @_hashPassword password, (err, hash) =>
       return cb err if err
       @models.User.findOne _id: userId , (err, user) =>
         return cb err if err
@@ -610,7 +699,11 @@ module.exports = class UserMethods
           cb null,user
 
 
-  addEmail:(userId,email,isValidated,cb = ->) =>
+  addEmail:(userId,email,isValidated,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb errors.UnprocessableEntity("userId") unless userId
     return cb errors.UnprocessableEntity("email") unless email
     userId = new ObjectId(userId.toString())
@@ -623,7 +716,11 @@ module.exports = class UserMethods
         return cb err if err
         cb null,item.emails, item
 
-  removeEmail:(userId,email,cb = ->) =>
+  removeEmail:(userId,email,options = {},cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     return cb new errors.UnprocessableEntity("userId") unless userId
     return cb new errors.UnprocessableEntity("email") unless roles && roles.length > 0
     userId = new ObjectId(userId.toString())
