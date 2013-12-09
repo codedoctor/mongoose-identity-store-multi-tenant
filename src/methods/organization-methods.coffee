@@ -1,11 +1,10 @@
 _ = require 'underscore-ext'
 errors = require 'some-errors'
-
 PageResult = require('simple-paginator').PageResult
-
 mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
 bcrypt = require 'bcryptjs'
+mongooseRestHelper = require 'mongoose-rest-helper'
 
 {isObjectId} = require 'mongodb-objectid-helper'
 
@@ -24,29 +23,35 @@ module.exports = class OrganizationMethods
   constructor:(@models) ->
     throw new Error "models parameter is required" unless @models
 
-  all:(offset = 0, count = 25, options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
+  all: (accountId, options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
 
-    @models.Organization.count (err, totalCount) =>
-      return cb err if err
-      @models.Organization.find {}, null, { skip: offset, limit: count}, (err, items) =>
-        return cb err if err
-        cb null, new PageResult(items || [], totalCount, offset, count)
+    settings = 
+        baseQuery:
+          accountId : mongooseRestHelper.asObjectId accountId
+        defaultSort: 'name'
+        defaultSelect: null
+        defaultCount: 1000
+    mongooseRestHelper.all @models.Organization,settings,options, cb
 
   ###
   Looks up a user by id.
   ###
-  get: (id, options =  {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
+  get: (organizationId, options =  {}, cb = ->) =>
+    return cb new Error "organizationId parameter is required." unless organizationId
+    mongooseRestHelper.getById @models.Organization,organizationId,null,options, cb
 
-    id = new ObjectId id.toString()
-    @models.Organization.findOne _id: id , (err, item) =>
-      return cb err if err
-      cb null, item
+
+  ###
+  Completely destroys an organization.
+  ###
+  destroy: (organizationId,options = {}, cb = ->) =>
+    return cb new Error "organizationId parameter is required." unless organizationId
+    settings = {}
+    mongooseRestHelper.destroy @models.Organization,organizationId, settings,{}, cb
+
+
+
 
   getByName: (accountId, name, options = {}, cb = ->) =>
     if _.isFunction(options)

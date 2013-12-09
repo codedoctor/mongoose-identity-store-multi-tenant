@@ -157,7 +157,7 @@
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(offset = 0, count = 25, cb)
+        - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -168,7 +168,7 @@
   <li>
     <span class='signature'>
       <a href='#get-instance'>
-        - (void) <strong>get</strong>(id, cb = function() {})
+        - (void) <strong>get</strong>(id, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -179,7 +179,7 @@
   <li>
     <span class='signature'>
       <a href='#getByName-instance'>
-        - (void) <strong>getByName</strong>(name, cb = function() {})
+        - (void) <strong>getByName</strong>(accountId, name, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -190,7 +190,7 @@
   <li>
     <span class='signature'>
       <a href='#getByNameOrId-instance'>
-        - (void) <strong>getByNameOrId</strong>(nameOrId, cb = function() {})
+        - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -227,7 +227,7 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(offset = 0, count = 25, cb)
+      - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -235,7 +235,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='get-instance'>
-      - (void) <strong>get</strong>(id, cb = function() {})
+      - (void) <strong>get</strong>(id, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -246,7 +246,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByName-instance'>
-      - (void) <strong>getByName</strong>(name, cb = function() {})
+      - (void) <strong>getByName</strong>(accountId, name, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -254,7 +254,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByNameOrId-instance'>
-      - (void) <strong>getByNameOrId</strong>(nameOrId, cb = function() {})
+      - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -264,7 +264,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 10:05:52 GMT-0800 (PST)
+  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

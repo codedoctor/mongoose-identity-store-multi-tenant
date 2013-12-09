@@ -1,9 +1,9 @@
 _ = require 'underscore-ext'
 PageResult = require('simple-paginator').PageResult
 errors = require 'some-errors'
-
 mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
+mongooseRestHelper = require 'mongoose-rest-helper'
 
 
 module.exports = class RoleMethods
@@ -13,26 +13,34 @@ module.exports = class RoleMethods
   constructor:(@models) ->
 
   all: (accountId,options = {},cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
+    return cb new Error "accountId parameter is required." unless accountId
 
-    accountId = new ObjectId accountId.toString()
+    settings = 
+        baseQuery:
+          accountId : mongooseRestHelper.asObjectId accountId
+        defaultSort: 'name'
+        defaultSelect: null
+        defaultCount: 1000
+    mongooseRestHelper.all @models.Role,settings,options, cb
 
-    @models.Role.count {accountId : accountId}, (err, totalCount) =>
-      return cb err if err
+  ###
+  Get a role for it's id.
+  ###
+  get: (roleId,options = {}, cb = ->) =>
+    return cb new Error "roleId parameter is required." unless roleId
+    mongooseRestHelper.getById @models.Role,roleId,null,options, cb
 
-      options.offset or= 0
-      options.count or= 1000
 
-      query = @models.Role.find({accountId : accountId})
-      query.sort('name')
-      query.select options.select if options.select && options.select.length > 0
+  ###
+  Completely destroys an organization.
+  ###
+  destroy: (roleId, options = {}, cb = ->) =>
+    return cb new Error "roleId parameter is required." unless roleId
+    settings = {}
+    mongooseRestHelper.destroy @models.Role,roleId, settings,{}, cb
 
-      query.setOptions { skip: options.offset, limit: options.count}
-      query.exec (err, items) =>
-        return cb err if err
-        cb null, new PageResult(items || [], totalCount, options.offset, options.count)
+
+
 
 
   ###
@@ -50,18 +58,6 @@ module.exports = class RoleMethods
       return cb err if err
       cb null, model,true
 
-  ###
-  Retrieve a single processDefinition-item through it's id
-  ###
-  get: (roleId,options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    @models.Role.findOne _id : roleId, (err,item) =>
-      return cb err if err
-      cb null, item
-
   patch: (roleId, obj = {}, options={}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
@@ -76,16 +72,4 @@ module.exports = class RoleMethods
         return cb err if err
         cb null, item
 
-  destroy: (roleId, options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    @models.Role.findOne _id : roleId, (err,item) =>
-      return cb err if err
-      return cb null unless item
-
-      item.remove (err) =>
-        return cb err if err
-        cb null
 

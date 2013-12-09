@@ -2,6 +2,9 @@ _ = require 'underscore-ext'
 
 PageResult = require('simple-paginator').PageResult
 passgen = require('passgen')
+mongoose = require "mongoose"
+ObjectId = mongoose.Types.ObjectId
+mongooseRestHelper = require 'mongoose-rest-helper'
 
 
 ###
@@ -38,8 +41,7 @@ module.exports = class OauthAuthMethods
       cb = options 
       options = {}
 
-    accountId = new ObjectId accountId.toString()
-    return cb new Error("clientId parameter missing in appForClientId") unless clientId
+    return cb new Error "clientId parameter missing in appForClientId" unless clientId
 
     @models.OauthApp.findOne 'clients.clientId' : clientId, (err, item) =>
       return cb err if err
@@ -87,10 +89,10 @@ module.exports = class OauthAuthMethods
       cb = options 
       options = {}
 
-    return cb new Error("userId parameter missing in createAccessGrant") unless userId
-    return cb new Error("appId parameter missing in createAccessGrant") unless appId
-    return cb new Error("redirectUrl parameter missing in createAccessGrant") unless redirectUrl
-    return cb new Error("scope parameter missing in createAccessGrant") unless scope && scope.length > 0
+    return cb new Error "userId parameter missing in createAccessGrant" unless userId
+    return cb new Error "appId parameter missing in createAccessGrant" unless appId
+    return cb new Error "redirectUrl parameter missing in createAccessGrant" unless redirectUrl
+    return cb new Error "scope parameter missing in createAccessGrant" unless scope && scope.length > 0
 
     accessGrant = new @models.OauthAccessGrant
       appId : appId
@@ -112,7 +114,7 @@ module.exports = class OauthAuthMethods
       cb = options 
       options = {}
 
-    @createTokenForUserId userId, clientId, realm, scope, expiresIn, cb
+    @createTokenForUserId userId, clientId, realm, scope, expiresIn,options, cb
 
 
   ###

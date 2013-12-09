@@ -1,12 +1,12 @@
 _ = require 'underscore-ext'
 errors = require 'some-errors'
-
 PageResult = require('simple-paginator').PageResult
-
 mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
 bcrypt = require 'bcryptjs'
 passgen = require 'passgen'
+mongooseRestHelper = require 'mongoose-rest-helper'
+
 
 {isObjectId} = require 'mongodb-objectid-helper'
 require('date-utils') # NOTE DANGEROUS - FIND A BETTER METHOD SOMETIMES
@@ -27,18 +27,30 @@ module.exports = class UserMethods
   constructor:(@models) ->
     throw new Error "models parameter is required" unless @models
 
+  ###
+  Retrieve all users for a specific accountId
+  ###
+  all:(accountId,options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
 
-  all:(accountId,offset = 0, count = 25, options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
+    settings = 
+        baseQuery:
+          accountId : mongooseRestHelper.asObjectId accountId
+        defaultSort: 'username'
+        defaultSelect: null
+        defaultCount: 50
+    mongooseRestHelper.all @models.User,settings,options, cb
 
-    accountId = new ObjectId accountId.toString()
-    @models.User.count {accountId : accountId}, (err, totalCount) =>
-      return cb err if err
-      @models.User.find {accountId : accountId}, null, { skip: offset, limit: count}, (err, items) =>
-        return cb err if err
-        cb null, new PageResult(items || [], totalCount, offset, count)
+
+  ###
+  Retrieves a user by it's id.
+  ###
+  get: (userId,options = {}, cb = ->) =>
+    return cb new Error "userId parameter is required." unless userId
+    mongooseRestHelper.getById @models.User,userId,null,options, cb
+
+
+
 
   ###
   Retrieves users by passing a list of id's, which can be string or objectIds
@@ -80,18 +92,6 @@ module.exports = class UserMethods
 
       cb null, new PageResult(items, items.length, 0, usernames.length)
 
-  ###
-  Looks up a user by id.
-  ###
-  get: (id,options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    id = new ObjectId id.toString()
-    @models.User.findOne _id: id , (err, item) =>
-      return cb err if err
-      cb null, item
 
   ###
   Returns a list of users who match q. In this version we do a straight user name match.

@@ -160,100 +160,78 @@
   <li>
     <span class='signature'>
       <a href='#create-instance'>
-        - (void) <strong>create</strong>(accountId, objs = {}, actor, cb)
+        - (void) <strong>create</strong>(accountId, objs = {}, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Create a new oauth client.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(accountId, offset = 0, count = 25, cb)
+        - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Retrieves all oauth apps for a specific accountId
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#getAppsForUser-instance'>
-        - (void) <strong>getAppsForUser</strong>(owningUserId, offset = 0, count = 25, cb)
+        - (void) <strong>getAppsForUser</strong>(accountId, owningUserId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Retrieves apps for a specific user, within the accountId scope.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#getApp-instance'>
-        - (void) <strong>getApp</strong>(oauthAppId, cb)
+      <a href='#get-instance'>
+        - (void) <strong>get</strong>(oauthAppId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      returns a specific oauth app.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#delete-instance'>
-        - (void) <strong>delete</strong>(oauthAppId, cb)
+      <a href='#destroy-instance'>
+        - (void) <strong>destroy</strong>(oauthAppId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#deleteApp-instance'>
-        - (void) <strong>deleteApp</strong>(oauthAppId, cb)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
+      Completely destroys an app.
     </span>
   </li>
   <li>
     <span class='signature'>
       <a href='#resetAppKeys-instance'>
-        - (void) <strong>resetAppKeys</strong>(oauthAppId, cb)
+        - (void) <strong>resetAppKeys</strong>(oauthAppId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Reset the app keys for an app.
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#update-instance'>
-        - (void) <strong>update</strong>(oauthAppId, data = {}, cb)
+      <a href='#patch-instance'>
+        - (void) <strong>patch</strong>(oauthAppId, data = {}, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#updateApp-instance'>
-        - (void) <strong>updateApp</strong>(oauthAppId, data = {}, cb)
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      
+      Update an app.
     </span>
   </li>
 </ul>
@@ -271,81 +249,86 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='create-instance'>
-      - (void) <strong>create</strong>(accountId, objs = {}, actor, cb)
+      - (void) <strong>create</strong>(accountId, objs = {}, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Create a new oauth client.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(accountId, offset = 0, count = 25, cb)
+      - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Retrieves all oauth apps for a specific accountId</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='getAppsForUser-instance'>
-      - (void) <strong>getAppsForUser</strong>(owningUserId, offset = 0, count = 25, cb)
+      - (void) <strong>getAppsForUser</strong>(accountId, owningUserId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Retrieves apps for a specific user, within the accountId scope.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='getApp-instance'>
-      - (void) <strong>getApp</strong>(oauthAppId, cb)
+    <p class='signature' id='get-instance'>
+      - (void) <strong>get</strong>(oauthAppId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>returns a specific oauth app.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='delete-instance'>
-      - (void) <strong>delete</strong>(oauthAppId, cb)
+    <p class='signature' id='destroy-instance'>
+      - (void) <strong>destroy</strong>(oauthAppId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Completely destroys an app.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='deleteApp-instance'>
-      - (void) <strong>deleteApp</strong>(oauthAppId, cb)
-      (bound)
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
     <p class='signature' id='resetAppKeys-instance'>
-      - (void) <strong>resetAppKeys</strong>(oauthAppId, cb)
+      - (void) <strong>resetAppKeys</strong>(oauthAppId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Reset the app keys for an app.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='update-instance'>
-      - (void) <strong>update</strong>(oauthAppId, data = {}, cb)
+    <p class='signature' id='patch-instance'>
+      - (void) <strong>patch</strong>(oauthAppId, data = {}, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Update an app.</p>
 </div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='updateApp-instance'>
-      - (void) <strong>updateApp</strong>(oauthAppId, data = {}, cb)
-      (bound)
-    </p>
-    <div class='tags'>
+<div class='tags'>
 </div>
   </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 10:05:52 GMT-0800 (PST)
+  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

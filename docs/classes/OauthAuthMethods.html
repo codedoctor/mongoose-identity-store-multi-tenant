@@ -147,7 +147,7 @@
   <li>
     <span class='signature'>
       <a href='#appForClientId-instance'>
-        - (void) <strong>appForClientId</strong>(clientId, cb)
+        - (void) <strong>appForClientId</strong>(clientId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -158,7 +158,7 @@
   <li>
     <span class='signature'>
       <a href='#validate-instance'>
-        - (void) <strong>validate</strong>(token, clientId, cb)
+        - (void) <strong>validate</strong>(token, clientId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -169,7 +169,7 @@
   <li>
     <span class='signature'>
       <a href='#createAccessGrant-instance'>
-        - (void) <strong>createAccessGrant</strong>(appId, userId, redirectUrl, scope, realm = null, cb)
+        - (void) <strong>createAccessGrant</strong>(appId, userId, redirectUrl, scope, realm = null, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -180,7 +180,7 @@
   <li>
     <span class='signature'>
       <a href='#createOrReuseTokenForUserId-instance'>
-        - (void) <strong>createOrReuseTokenForUserId</strong>(userId, clientId, realm, scope, expiresIn, cb)
+        - (void) <strong>createOrReuseTokenForUserId</strong>(userId, clientId, realm, scope, expiresIn, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -191,7 +191,7 @@
   <li>
     <span class='signature'>
       <a href='#createTokenForUserId-instance'>
-        - (void) <strong>createTokenForUserId</strong>(userId, clientId, realm = null, scope = null, expiresIn = null, cb)
+        - (void) <strong>createTokenForUserId</strong>(userId, clientId, realm = null, scope = null, expiresIn = null, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -202,7 +202,7 @@
   <li>
     <span class='signature'>
       <a href='#exchangeAuthorizationCodeForAccessToken-instance'>
-        - (void) <strong>exchangeAuthorizationCodeForAccessToken</strong>(code, cb)
+        - (void) <strong>exchangeAuthorizationCodeForAccessToken</strong>(code, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -213,7 +213,7 @@
   <li>
     <span class='signature'>
       <a href='#exchangeRefreshTokenForAccessToken-instance'>
-        - (void) <strong>exchangeRefreshTokenForAccessToken</strong>(refreshToken, cb)
+        - (void) <strong>exchangeRefreshTokenForAccessToken</strong>(refreshToken, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -272,7 +272,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='appForClientId-instance'>
-      - (void) <strong>appForClientId</strong>(clientId, cb)
+      - (void) <strong>appForClientId</strong>(clientId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -294,7 +294,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='validate-instance'>
-      - (void) <strong>validate</strong>(token, clientId, cb)
+      - (void) <strong>validate</strong>(token, clientId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -307,7 +307,7 @@ isClientValid can be checked for tighter security.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='createAccessGrant-instance'>
-      - (void) <strong>createAccessGrant</strong>(appId, userId, redirectUrl, scope, realm = null, cb)
+      - (void) <strong>createAccessGrant</strong>(appId, userId, redirectUrl, scope, realm = null, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -369,7 +369,7 @@ isClientValid can be checked for tighter security.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='createOrReuseTokenForUserId-instance'>
-      - (void) <strong>createOrReuseTokenForUserId</strong>(userId, clientId, realm, scope, expiresIn, cb)
+      - (void) <strong>createOrReuseTokenForUserId</strong>(userId, clientId, realm, scope, expiresIn, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -380,7 +380,7 @@ isClientValid can be checked for tighter security.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='createTokenForUserId-instance'>
-      - (void) <strong>createTokenForUserId</strong>(userId, clientId, realm = null, scope = null, expiresIn = null, cb)
+      - (void) <strong>createTokenForUserId</strong>(userId, clientId, realm = null, scope = null, expiresIn = null, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -391,7 +391,7 @@ isClientValid can be checked for tighter security.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='exchangeAuthorizationCodeForAccessToken-instance'>
-      - (void) <strong>exchangeAuthorizationCodeForAccessToken</strong>(code, cb)
+      - (void) <strong>exchangeAuthorizationCodeForAccessToken</strong>(code, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -413,7 +413,7 @@ isClientValid can be checked for tighter security.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='exchangeRefreshTokenForAccessToken-instance'>
-      - (void) <strong>exchangeRefreshTokenForAccessToken</strong>(refreshToken, cb)
+      - (void) <strong>exchangeRefreshTokenForAccessToken</strong>(refreshToken, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -437,7 +437,7 @@ isClientValid can be checked for tighter security.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 10:05:52 GMT-0800 (PST)
+  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

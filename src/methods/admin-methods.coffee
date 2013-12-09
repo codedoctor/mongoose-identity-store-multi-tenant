@@ -1,6 +1,5 @@
 _ = require 'underscore-ext'
 errors = require 'some-errors'
-
 mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
 bcrypt = require 'bcryptjs'

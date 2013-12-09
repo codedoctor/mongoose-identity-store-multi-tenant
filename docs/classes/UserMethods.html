@@ -151,7 +151,7 @@
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(accountId, offset = 0, count = 25, cb)
+        - (void) <strong>all</strong>(accountId, offset = 0, count = 25, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -162,7 +162,7 @@
   <li>
     <span class='signature'>
       <a href='#getByIds-instance'>
-        - (void) <strong>getByIds</strong>(idList = [], cb)
+        - (void) <strong>getByIds</strong>(idList = [], options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -184,7 +184,7 @@
   <li>
     <span class='signature'>
       <a href='#get-instance'>
-        - (void) <strong>get</strong>(id, cb = function() {})
+        - (void) <strong>get</strong>(id, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -206,7 +206,7 @@
   <li>
     <span class='signature'>
       <a href='#getByName-instance'>
-        - (void) <strong>getByName</strong>(accountId, name, cb = function() {})
+        - (void) <strong>getByName</strong>(accountId, name, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -217,7 +217,7 @@
   <li>
     <span class='signature'>
       <a href='#getByPrimaryEmail-instance'>
-        - (void) <strong>getByPrimaryEmail</strong>(accountId, email, cb = function() {})
+        - (void) <strong>getByPrimaryEmail</strong>(accountId, email, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -228,7 +228,7 @@
   <li>
     <span class='signature'>
       <a href='#getByNameOrId-instance'>
-        - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, cb = function() {})
+        - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -239,7 +239,7 @@
   <li>
     <span class='signature'>
       <a href='#patch-instance'>
-        - (void) <strong>patch</strong>(accountId, usernameOrId, obj = {}, actor, cb = function() {})
+        - (void) <strong>patch</strong>(accountId, usernameOrId, obj = {}, actor, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -250,7 +250,7 @@
   <li>
     <span class='signature'>
       <a href='#delete-instance'>
-        - (void) <strong>delete</strong>(accountId, usernameOrId, actor, cb = function() {})
+        - (void) <strong>delete</strong>(accountId, usernameOrId, actor, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -261,7 +261,7 @@
   <li>
     <span class='signature'>
       <a href='#destroy-instance'>
-        - (void) <strong>destroy</strong>(accountId, usernameOrId, actor, cb = function() {})
+        - (void) <strong>destroy</strong>(accountId, usernameOrId, actor, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -272,7 +272,7 @@
   <li>
     <span class='signature'>
       <a href='#setPassword-instance'>
-        - (void) <strong>setPassword</strong>(accountId, usernameOrId, password, actor, cb = function() {})
+        - (void) <strong>setPassword</strong>(accountId, usernameOrId, password, actor, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -283,7 +283,7 @@
   <li>
     <span class='signature'>
       <a href='#findUserByUsernameOrEmail-instance'>
-        - (void) <strong>findUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, cb)
+        - (void) <strong>findUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -294,7 +294,7 @@
   <li>
     <span class='signature'>
       <a href='#validateUserByUsernameOrEmail-instance'>
-        - (void) <strong>validateUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, password, cb)
+        - (void) <strong>validateUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, password, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -304,8 +304,8 @@
   </li>
   <li>
     <span class='signature'>
-      <a href='#hashPassword-instance'>
-        - (void) <strong>hashPassword</strong>(password, cb)
+      <a href='#_hashPassword-instance'>
+        - (void) <strong>_hashPassword</strong>(password, cb)
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -316,7 +316,7 @@
   <li>
     <span class='signature'>
       <a href='#create-instance'>
-        - (void) <strong>create</strong>(accountId, objs = {}, cb)
+        - (void) <strong>create</strong>(accountId, objs = {}, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -327,7 +327,7 @@
   <li>
     <span class='signature'>
       <a href='#getOrCreateUserFromProvider-instance'>
-        - (void) <strong>getOrCreateUserFromProvider</strong>(accountId, provider, v1, v2, profile, cb)
+        - (void) <strong>getOrCreateUserFromProvider</strong>(accountId, provider, v1, v2, profile, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -371,7 +371,7 @@
   <li>
     <span class='signature'>
       <a href='#addIdentityToUser-instance'>
-        - (void) <strong>addIdentityToUser</strong>(userId, provider, v1, v2, profile, cb = function() {})
+        - (void) <strong>addIdentityToUser</strong>(userId, provider, v1, v2, profile, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -382,7 +382,7 @@
   <li>
     <span class='signature'>
       <a href='#removeIdentityFromUser-instance'>
-        - (void) <strong>removeIdentityFromUser</strong>(userId, identityId, cb = function() {})
+        - (void) <strong>removeIdentityFromUser</strong>(userId, identityId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -393,7 +393,7 @@
   <li>
     <span class='signature'>
       <a href='#addRoles-instance'>
-        - (void) <strong>addRoles</strong>(userId, roles, cb = function() {})
+        - (void) <strong>addRoles</strong>(userId, roles, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -404,7 +404,7 @@
   <li>
     <span class='signature'>
       <a href='#removeRoles-instance'>
-        - (void) <strong>removeRoles</strong>(userId, roles, cb = function() {})
+        - (void) <strong>removeRoles</strong>(userId, roles, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -415,7 +415,7 @@
   <li>
     <span class='signature'>
       <a href='#resetPassword-instance'>
-        - (void) <strong>resetPassword</strong>(accountId, email, cb = function() {})
+        - (void) <strong>resetPassword</strong>(accountId, email, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -426,7 +426,7 @@
   <li>
     <span class='signature'>
       <a href='#resetPasswordToken-instance'>
-        - (void) <strong>resetPasswordToken</strong>(accountId, token, password, cb = function() {})
+        - (void) <strong>resetPasswordToken</strong>(accountId, token, password, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -437,7 +437,7 @@
   <li>
     <span class='signature'>
       <a href='#addEmail-instance'>
-        - (void) <strong>addEmail</strong>(userId, email, isValidated, cb = function() {})
+        - (void) <strong>addEmail</strong>(userId, email, isValidated, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -448,7 +448,7 @@
   <li>
     <span class='signature'>
       <a href='#removeEmail-instance'>
-        - (void) <strong>removeEmail</strong>(userId, email, cb = function() {})
+        - (void) <strong>removeEmail</strong>(userId, email, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -485,7 +485,7 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(accountId, offset = 0, count = 25, cb)
+      - (void) <strong>all</strong>(accountId, offset = 0, count = 25, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -493,7 +493,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByIds-instance'>
-      - (void) <strong>getByIds</strong>(idList = [], cb)
+      - (void) <strong>getByIds</strong>(idList = [], options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -556,7 +556,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='get-instance'>
-      - (void) <strong>get</strong>(id, cb = function() {})
+      - (void) <strong>get</strong>(id, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -635,7 +635,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByName-instance'>
-      - (void) <strong>getByName</strong>(accountId, name, cb = function() {})
+      - (void) <strong>getByName</strong>(accountId, name, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -643,7 +643,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByPrimaryEmail-instance'>
-      - (void) <strong>getByPrimaryEmail</strong>(accountId, email, cb = function() {})
+      - (void) <strong>getByPrimaryEmail</strong>(accountId, email, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -651,7 +651,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='getByNameOrId-instance'>
-      - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, cb = function() {})
+      - (void) <strong>getByNameOrId</strong>(accountId, nameOrId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -659,7 +659,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='patch-instance'>
-      - (void) <strong>patch</strong>(accountId, usernameOrId, obj = {}, actor, cb = function() {})
+      - (void) <strong>patch</strong>(accountId, usernameOrId, obj = {}, actor, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -667,7 +667,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='delete-instance'>
-      - (void) <strong>delete</strong>(accountId, usernameOrId, actor, cb = function() {})
+      - (void) <strong>delete</strong>(accountId, usernameOrId, actor, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -675,7 +675,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='destroy-instance'>
-      - (void) <strong>destroy</strong>(accountId, usernameOrId, actor, cb = function() {})
+      - (void) <strong>destroy</strong>(accountId, usernameOrId, actor, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -683,7 +683,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='setPassword-instance'>
-      - (void) <strong>setPassword</strong>(accountId, usernameOrId, password, actor, cb = function() {})
+      - (void) <strong>setPassword</strong>(accountId, usernameOrId, password, actor, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -691,7 +691,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='findUserByUsernameOrEmail-instance'>
-      - (void) <strong>findUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, cb)
+      - (void) <strong>findUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -702,7 +702,7 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='validateUserByUsernameOrEmail-instance'>
-      - (void) <strong>validateUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, password, cb)
+      - (void) <strong>validateUserByUsernameOrEmail</strong>(accountId, usernameOrEmail, password, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -714,8 +714,8 @@ cb(null, user) in case of user not found, password not valid, or valid user</p>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='hashPassword-instance'>
-      - (void) <strong>hashPassword</strong>(password, cb)
+    <p class='signature' id='_hashPassword-instance'>
+      - (void) <strong>_hashPassword</strong>(password, cb)
       (bound)
     </p>
     <div class='tags'>
@@ -723,7 +723,7 @@ cb(null, user) in case of user not found, password not valid, or valid user</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='create-instance'>
-      - (void) <strong>create</strong>(accountId, objs = {}, cb)
+      - (void) <strong>create</strong>(accountId, objs = {}, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -734,7 +734,7 @@ cb(null, user) in case of user not found, password not valid, or valid user</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='getOrCreateUserFromProvider-instance'>
-      - (void) <strong>getOrCreateUserFromProvider</strong>(accountId, provider, v1, v2, profile, cb)
+      - (void) <strong>getOrCreateUserFromProvider</strong>(accountId, provider, v1, v2, profile, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -804,7 +804,7 @@ cb(null, user) in case of user not found, password not valid, or valid user</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='addIdentityToUser-instance'>
-      - (void) <strong>addIdentityToUser</strong>(userId, provider, v1, v2, profile, cb = function() {})
+      - (void) <strong>addIdentityToUser</strong>(userId, provider, v1, v2, profile, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -859,7 +859,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='removeIdentityFromUser-instance'>
-      - (void) <strong>removeIdentityFromUser</strong>(userId, identityId, cb = function() {})
+      - (void) <strong>removeIdentityFromUser</strong>(userId, identityId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -867,7 +867,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='addRoles-instance'>
-      - (void) <strong>addRoles</strong>(userId, roles, cb = function() {})
+      - (void) <strong>addRoles</strong>(userId, roles, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -875,7 +875,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='removeRoles-instance'>
-      - (void) <strong>removeRoles</strong>(userId, roles, cb = function() {})
+      - (void) <strong>removeRoles</strong>(userId, roles, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -883,7 +883,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='resetPassword-instance'>
-      - (void) <strong>resetPassword</strong>(accountId, email, cb = function() {})
+      - (void) <strong>resetPassword</strong>(accountId, email, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -891,7 +891,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='resetPasswordToken-instance'>
-      - (void) <strong>resetPasswordToken</strong>(accountId, token, password, cb = function() {})
+      - (void) <strong>resetPasswordToken</strong>(accountId, token, password, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
@@ -902,7 +902,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='addEmail-instance'>
-      - (void) <strong>addEmail</strong>(userId, email, isValidated, cb = function() {})
+      - (void) <strong>addEmail</strong>(userId, email, isValidated, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -910,7 +910,7 @@ existing provider of the same type.</p>
   </div>
   <div class='method_details'>
     <p class='signature' id='removeEmail-instance'>
-      - (void) <strong>removeEmail</strong>(userId, email, cb = function() {})
+      - (void) <strong>removeEmail</strong>(userId, email, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -920,7 +920,7 @@ existing provider of the same type.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 10:05:52 GMT-0800 (PST)
+  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

@@ -2,6 +2,10 @@ _ = require 'underscore-ext'
 
 Scope = require('../scope').Scope
 PageResult = require('simple-paginator').PageResult
+mongoose = require "mongoose"
+ObjectId = mongoose.Types.ObjectId
+mongooseRestHelper = require 'mongoose-rest-helper'
+
 
 ###
 Provides methods to interact with the scope store.

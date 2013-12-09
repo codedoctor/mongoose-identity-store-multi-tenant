@@ -136,7 +136,7 @@
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(offset = 0, count = 25, cb)
+        - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -147,7 +147,7 @@
   <li>
     <span class='signature'>
       <a href='#get-instance'>
-        - (void) <strong>get</strong>(name, cb)
+        - (void) <strong>get</strong>(name, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -211,7 +211,7 @@ scopes: [...]
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(offset = 0, count = 25, cb)
+      - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -219,7 +219,7 @@ scopes: [...]
   </div>
   <div class='method_details'>
     <p class='signature' id='get-instance'>
-      - (void) <strong>get</strong>(name, cb)
+      - (void) <strong>get</strong>(name, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -248,7 +248,7 @@ scopes: [...]
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 10:05:52 GMT-0800 (PST)
+  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

@@ -43,7 +43,8 @@
     "mongodb-objectid-helper": "0.2.0",
     "mongoose-plugins-accessible-by": "0.2.2",
     "async": "0.2.9",
-    "simple-paginator": "0.2.1"
+    "simple-paginator": "0.2.1",
+    "mongoose-rest-helper" : "0.1.2"
   },
   "devDependencies": {
     "coffee-script": "1.6.3",
