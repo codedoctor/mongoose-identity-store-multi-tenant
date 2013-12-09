@@ -76,7 +76,10 @@ module.exports = OauthAppSchema = new mongoose.Schema
           tokensGranted : 0
           tokensRevoked : 0
 
-  , strict: true
+  ,
+    strict: true
+    collection: 'identitymt.oauthapps'
+
 
 OauthAppSchema.plugin pluginTimestamp.timestamps
 OauthAppSchema.plugin pluginCreatedBy.createdBy, {isRequired : false, v:2, keepV1 : false}

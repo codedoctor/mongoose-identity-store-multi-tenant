@@ -6,7 +6,6 @@ ObjectId = require('mongoose').Types.ObjectId
 
 helper = require './helper'
 
-
 class MongoHelper
   constructor: () ->
     @mongo = mongoskin.db helper.database, safe:false
@@ -52,17 +51,17 @@ class MongoHelper
       cb null
 
   dumpCollection: (name, cb = ->) =>
-    @mongo.collection(name).find({}).toArray (err, items) =>
-        return cb err if err
-        console.log "========================== DUMPING #{name} =========================="
-        if items
-          _.each items, (item) =>
-            console.log JSON.stringify(item)
-            console.log "-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
-        else
-          console.log "NO ITEMS"
-        console.log "---------------------------------------------------------------------"
-        cb null
+    console.log "========================== DUMPING #{name} =========================="
+    @mongo.collection(name).find({}).toArray (err, items) =>    
+      return cb err if err
+      if items
+        _.each items, (item) =>
+          console.log JSON.stringify(item)
+          console.log "-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+"
+      else
+        console.log "NO ITEMS"
+      console.log "---------------------------------------------------------------------"
+      cb null
 
 
 module.exports = new MongoHelper()

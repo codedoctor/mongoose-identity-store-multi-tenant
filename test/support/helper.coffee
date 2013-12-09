@@ -13,7 +13,13 @@ class Helper
   loggingEnabled: false
   accountId : '52998e1c32e5724771000009'
   database :  'mongodb://localhost/codedoctor-test'
-  collections: ['oauthaccesstokens','oauthapps','oauthclients','organizations','users']
+  collections : [
+    'identitymt.oauthaccesstokens'
+    'identitymt.oauthapps'
+    'identitymt.oauthclients'
+    'identitymt.organizations'
+    'identitymt.users'
+    'identitymt.roles']
 
   start: (obj = {}, done = ->) =>
     _.defaults obj, 
@@ -25,7 +31,7 @@ class Helper
 
     tasks = []
 
-    cleanDatabase @mongo,@database,@loggingEnabled, (err) =>
+    cleanDatabase @mongo,@database,@collections,@loggingEnabled, (err) =>
       done()
 
 

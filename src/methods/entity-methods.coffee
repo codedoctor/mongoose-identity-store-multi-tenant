@@ -23,19 +23,16 @@ module.exports = class EntityMethods
   Looks up a user or organization by id. Users are first.
   ###
   get: (id,options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    id = new ObjectId id.toString()
-    @models.User.findOne _id: id , (err, item) =>
+    return cb new Error "id parameter is required." unless id
+    mongooseRestHelper.getById @models.User,id,null,options, (err,item) =>
       return cb err if err
       return cb null, item if item
-      @models.Organization.findOne _id: id , (err, item) =>
-        return cb err if err
-        cb null, item
+      mongooseRestHelper.getById @models.Organization,id,null,options,cb
 
 
+  ###
+  @TODO resthelper implementation
+  ###
   getByName: (accountId,name,options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
@@ -45,10 +42,13 @@ module.exports = class EntityMethods
     @models.User.findOne {accountId : accountId, username: name} , (err, item) =>
       return cb err if err
       return cb null, item if item
-      @models.Organization.findOne name: name , (err, item) =>
+      @models.Organization.findOne {accountId : accountId,name: name }, (err, item) =>
         return cb err if err
         cb null, item
 
+  ###
+  @TODO resthelper implementation
+  ###
   getByNameOrId: (accountId,nameOrId, options = {},cb = ->) =>
     if _.isFunction(options)
       cb = options 
@@ -57,7 +57,7 @@ module.exports = class EntityMethods
     accountId = new ObjectId accountId.toString()
 
     if isObjectId(nameOrId)
-      @get nameOrId, cb
+      @get nameOrId, {}, cb
     else
-      @getByName accountId,nameOrId, cb
+      @getByName accountId,nameOrId, {}, cb
 

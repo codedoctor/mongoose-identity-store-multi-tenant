@@ -21,7 +21,9 @@ module.exports = OauthClientSchema = new mongoose.Schema
     revokedAt:
       type: Date
       default:() -> null
-  , strict : true
+  , 
+    strict: true
+    collection: 'identitymt.oauthclients'
 
 OauthClientSchema.index({ accountId: 1,name: 1 },{ unique: true, sparse: false} );
 

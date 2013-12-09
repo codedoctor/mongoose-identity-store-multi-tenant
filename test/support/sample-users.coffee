@@ -32,7 +32,7 @@ module.exports = class SampleUsers
 
   setup: (cb) =>
     addOneUser = (user,done) =>
-      @mongo.collection("users").save user,done 
+      @mongo.collection("identitymt.users").save user,done 
 
     async.forEach @users, addOneUser, (err) =>
       cb err

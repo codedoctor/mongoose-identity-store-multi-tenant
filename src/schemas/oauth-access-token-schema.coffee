@@ -55,7 +55,10 @@ module.exports = OauthAccessTokenSchema = new mongoose.Schema
     refreshToken:
       type: String
       default: () -> passgen.create(80)
-  , strict : true
+  ,
+    strict: true
+    collection: 'identitymt.oauthaccesstokens'
+
 
 OauthAccessTokenSchema.plugin pluginTimestamp.timestamps
 

@@ -151,12 +151,23 @@
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(accountId, offset = 0, count = 25, options = {}, cb = function() {})
+        - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      
+      Retrieve all users for a specific accountId
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get-instance'>
+        - (void) <strong>get</strong>(userId, options = {}, cb = function() {})
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Retrieves a user by it&#39;s id.
     </span>
   </li>
   <li>
@@ -179,17 +190,6 @@
     <span class='bound note title'>Bound</span>
     <span class='desc'>
       Retrieves users by passing a list of usernames.
-    </span>
-  </li>
-  <li>
-    <span class='signature'>
-      <a href='#get-instance'>
-        - (void) <strong>get</strong>(id, options = {}, cb = function() {})
-      </a>
-    </span>
-    <span class='bound note title'>Bound</span>
-    <span class='desc'>
-      Looks up a user by id.
     </span>
   </li>
   <li>
@@ -485,10 +485,24 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(accountId, offset = 0, count = 25, options = {}, cb = function() {})
+      - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       (bound)
     </p>
-    <div class='tags'>
+    <div class='docstring'>
+  <p>Retrieve all users for a specific accountId</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='get-instance'>
+      - (void) <strong>get</strong>(userId, options = {}, cb = function() {})
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>Retrieves a user by it&#39;s id.</p>
+</div>
+<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -552,17 +566,6 @@
       <span class='desc'>the space separated fields to return, which default to all.</span>
     </li>
   </ul>
-</div>
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='get-instance'>
-      - (void) <strong>get</strong>(id, options = {}, cb = function() {})
-      (bound)
-    </p>
-    <div class='docstring'>
-  <p>Looks up a user by id.</p>
-</div>
-<div class='tags'>
 </div>
   </div>
   <div class='method_details'>
@@ -920,7 +923,7 @@ existing provider of the same type.</p>
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
+  Mon Dec 09 2013 13:54:28 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

@@ -102,7 +102,9 @@ module.exports = UserSchema = new mongoose.Schema
     type: 
       token : String
       validTill : Date
- , strict: true
+ , 
+  strict: true
+  collection: 'identitymt.users'
 
 UserSchema.index({ accountId: 1,username: 1 },{ unique: true, sparse: false} );
 UserSchema.index({ accountId: 1,primaryEmail: 1 },{ unique: true, sparse: true} );

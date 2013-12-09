@@ -157,7 +157,7 @@
   <li>
     <span class='signature'>
       <a href='#all-instance'>
-        - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
+        - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
@@ -168,12 +168,23 @@
   <li>
     <span class='signature'>
       <a href='#get-instance'>
-        - (void) <strong>get</strong>(id, options = {}, cb = function() {})
+        - (void) <strong>get</strong>(organizationId, options = {}, cb = function() {})
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
       Looks up a user by id.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#destroy-instance'>
+        - (void) <strong>destroy</strong>(organizationId, options = {}, cb = function() {})
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Completely destroys an organization.
     </span>
   </li>
   <li>
@@ -227,7 +238,7 @@
       <div class='methods'>
   <div class='method_details'>
     <p class='signature' id='all-instance'>
-      - (void) <strong>all</strong>(offset = 0, count = 25, options = {}, cb = function() {})
+      - (void) <strong>all</strong>(accountId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='tags'>
@@ -235,11 +246,22 @@
   </div>
   <div class='method_details'>
     <p class='signature' id='get-instance'>
-      - (void) <strong>get</strong>(id, options = {}, cb = function() {})
+      - (void) <strong>get</strong>(organizationId, options = {}, cb = function() {})
       (bound)
     </p>
     <div class='docstring'>
   <p>Looks up a user by id.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-instance'>
+      - (void) <strong>destroy</strong>(organizationId, options = {}, cb = function() {})
+      (bound)
+    </p>
+    <div class='docstring'>
+  <p>Completely destroys an organization.</p>
 </div>
 <div class='tags'>
 </div>
@@ -264,7 +286,7 @@
     </div>
     <div id='footer'>
   Generated on
-  Sun Dec 08 2013 15:45:59 GMT-0800 (PST)
+  Mon Dec 09 2013 13:54:28 GMT-0800 (PST)
   by
   <a href='https://github.com/netzpirat/codo' title='CoffeeScript API documentation generator'>Codo</a>
   v1.9.0

@@ -46,7 +46,9 @@ module.exports = OrganizationSchema = new mongoose.Schema
     data:
       type: mongoose.Schema.Types.Mixed
       default : () -> {}
-  , strict: true
+  ,
+    strict: true
+    collection: 'identitymt.organizations'
 
 OrganizationSchema.index({ accountId: 1,name: 1 },{ unique: true, sparse: false} );
 

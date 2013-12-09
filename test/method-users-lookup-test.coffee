@@ -5,6 +5,7 @@ mongoose = require 'mongoose'
 ObjectId = mongoose.Types.ObjectId
 
 sampleUsers = null
+mongoHelper = require './support/mongo-helper'
 
 describe 'WHEN working with store.users.lookup', ->
 
@@ -33,31 +34,30 @@ describe 'WHEN working with store.users.lookup', ->
 
     ###
     it "DUMP", (done) ->
-      helper.dumpCollection('users') ->
-        done()
+      mongoHelper.dumpCollection 'identitymt.users', done
     ###
-    describe 'WHEN invoking lookup', ->
-      it 'WITH empty parameters IT should return a full list', (done) ->
-        helper.store.users.lookup helper.accountId, '',{}, (err,result) ->
-          return done err if err
-          should.exist.result
-          result.should.have.property "items"
-          result.items.should.have.lengthOf 10
-          done()
+  describe 'WHEN invoking lookup', ->
+    it 'WITH empty parameters IT should return a full list', (done) ->
+      helper.store.users.lookup helper.accountId, '',{}, (err,result) ->
+        return done err if err
+        should.exist.result
+        result.should.have.property "items"
+        result.items.should.have.lengthOf 10
+        done()
 
-      it 'WITH searching for Al IT should return a list of 10 users', (done) ->
-        helper.store.users.lookup helper.accountId, 'Al',{}, (err,result) ->
-          return done err if err
-          should.exist.result
-          result.should.have.property "items"
-          result.items.should.have.lengthOf 10
-          done()
+    it 'WITH searching for Al IT should return a list of 10 users', (done) ->
+      helper.store.users.lookup helper.accountId, 'Al',{}, (err,result) ->
+        return done err if err
+        should.exist.result
+        result.should.have.property "items"
+        result.items.should.have.lengthOf 10
+        done()
 
-      it 'WITH searching for Al and limit 5 IT should return a list of 5 users', (done) ->
-        helper.store.users.lookup helper.accountId, 'Al',{limit : 5}, (err,result) ->
-          return done err if err
-          should.exist.result
-          result.should.have.property "items"
-          result.items.should.have.lengthOf 5
-          done()
+    it 'WITH searching for Al and limit 5 IT should return a list of 5 users', (done) ->
+      helper.store.users.lookup helper.accountId, 'Al',{limit : 5}, (err,result) ->
+        return done err if err
+        should.exist.result
+        result.should.have.property "items"
+        result.items.should.have.lengthOf 5
+        done()
 
