@@ -2,7 +2,7 @@
   "author": "Martin Wawrusch <martin@wawrusch.com> (http://martinatsunset.com)",
   "name": "mongoose-identity-store-multi-tenant",
   "description": "A bunch of mongoose schemas to implement identity management (users, accesstokens, oauth apps)",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -44,7 +44,8 @@
     "mongoose-plugins-accessible-by": "0.2.2",
     "async": "0.2.9",
     "simple-paginator": "0.2.1",
-    "mongoose-rest-helper": "0.1.2"
+    "mongoose-rest-helper": "0.1.6",
+    "oauth2orize": "1.0.0"
   },
   "devDependencies": {
     "coffee-script": "1.6.3",
