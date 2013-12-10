@@ -156,7 +156,7 @@ module.exports = class UserMethods
     else
       @getByName accountId,nameOrId, cb
 
-  patch: (accountId,usernameOrId, obj = {}, actor,options = {}, cb = ->) =>
+  patch: (accountId,usernameOrId, obj = {},options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
@@ -172,20 +172,20 @@ module.exports = class UserMethods
         return cb err if err
 
         if obj.password
-          @setPassword usernameOrId,obj.password,actor, (err,item2) ->
+          @setPassword accountId,usernameOrId,obj.password, {}, (err,item2) ->
             return cb err if err
             cb null, item
         else
           cb null, item
 
-  delete: (accountId,usernameOrId, actor,options = {}, cb = ->) =>
+  delete: (accountId,usernameOrId,options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
 
     accountId = new ObjectId accountId.toString()
     @getByNameOrId accountId,usernameOrId, (err, item) =>
-      # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
+
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
 
@@ -197,14 +197,12 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  destroy: (accountId,usernameOrId, actor, options = {}, cb = ->) =>
+  destroy: (accountId,usernameOrId, options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
 
-    accountId = new ObjectId accountId.toString()
-    @getByNameOrId accountId,usernameOrId, (err, item) =>
-      # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
+    @getByNameOrId accountId,usernameOrId, {}, (err, item) =>
       return cb err if err
       return cb new errors.NotFound("/users/#{usernameOrId}") unless item
 
@@ -212,18 +210,15 @@ module.exports = class UserMethods
         return cb err if err
         cb null, item
 
-  setPassword: (accountId,usernameOrId, password, actor,options = {}, cb = ->) =>
+  setPassword: (accountId,usernameOrId, password,options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
 
-    accountId = new ObjectId accountId.toString()
-    @getByNameOrId accountId,usernameOrId, (err, item) =>
-      # CHECK ACCESS RIGHTS. If actor is not the creator or in admin role
+    @getByNameOrId accountId,usernameOrId, {}, (err, item) =>
       return cb err if err
-      return cb new errors.NotFound("/users/#{usernameOrId}") unless item
-      # TODO: Handle deleted
-      #return cb null if item.isDeleted
+      # @TODO don't return url here
+      return cb new errors.NotFound("/users/#{usernameOrId}") unless item && !item.isDeleted
 
       @_hashPassword password, (err, hash) =>
         return cb err if err

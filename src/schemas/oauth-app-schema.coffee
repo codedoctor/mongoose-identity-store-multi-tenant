@@ -56,7 +56,7 @@ module.exports = OauthAppSchema = new mongoose.Schema
 
       tosAcceptanceDate :
         type: Date
-        default: () -> null
+        default: -> null
 
       #owningUserId:
       #  type: Schema.ObjectId

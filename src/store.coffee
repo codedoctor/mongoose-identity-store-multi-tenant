@@ -55,14 +55,16 @@ module.exports = class Store
     @models =
       User : m.model "User", UserSchema
       Role : m.model "Role", RoleSchema
-      UserIdentity: m.model "UserIdentity", UserIdentitySchema
-      UserImage: m.model "UserImage", UserImageSchema
-      UserProfile: m.model "UserProfile", UserProfileSchema
-      Email: m.model "Email", EmailSchema
       Organization : m.model "Organization", OrganizationSchema
       OauthAccessGrant : m.model "OAuthAccessGrant", OauthAccessGrantSchema
       OauthAccessToken : m.model "OauthAccessToken", OauthAccessTokenSchema
       OauthApp : m.model "OauthApp", OauthAppSchema
+
+      # The following should NOT be models
+      UserIdentity: m.model "UserIdentity", UserIdentitySchema
+      UserImage: m.model "UserImage", UserImageSchema
+      UserProfile: m.model "UserProfile", UserProfileSchema
+      Email: m.model "Email", EmailSchema
       OauthRedirectUri : m.model "OauthRedirectUri", OauthRedirectUriSchema
       OauthClient : m.model "OauthClient", OauthClientSchema
 
