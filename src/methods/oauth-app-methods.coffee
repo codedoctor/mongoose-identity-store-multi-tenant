@@ -19,7 +19,6 @@ module.exports = class OauthAppMethods
   ###
   create:(accountId,objs = {},options={}, cb = ->) =>
     return cb new Error "accountId parameter is required." unless accountId
-    return cb new Error "objs.createdByUserId parameter is required." unless objs.createdByUserId
 
     if _.isFunction(options)
       cb = options 
