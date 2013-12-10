@@ -71,7 +71,7 @@ module.exports = class OrganizationMethods
   Patch an organization
   ###
   patch: (organizationId, obj = {}, options = {}, cb = ->) =>
-    return cb new Error "organizationId parameter is required." unless apporganizationIdId
+    return cb new Error "organizationId parameter is required." unless organizationId
     settings =
       exclude : UPDATE_EXCLUDEFIELDS
     mongooseRestHelper.patch @models.Organization,organizationId, settings, obj, options, cb
