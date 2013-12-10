@@ -145,7 +145,7 @@ UserSchema.methods.toRest = (baseUrl, actor) ->
 
     createdAt: @createdAt
     updatedAt: @updatedAt
-    createdBy : @createdBy
+    createdByUserId : @createdByUserId
     isDeleted : @isDeleted || false
     deletedAt : @deletedAt || null
     onboardingState : @onboardingState

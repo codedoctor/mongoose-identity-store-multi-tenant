@@ -3,7 +3,6 @@ errors = require 'some-errors'
 PageResult = require('simple-paginator').PageResult
 mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
-bcrypt = require 'bcryptjs'
 mongooseRestHelper = require 'mongoose-rest-helper'
 
 {isObjectId} = require 'mongodb-objectid-helper'
@@ -13,9 +12,7 @@ mongooseRestHelper = require 'mongoose-rest-helper'
 Provides methods to interact with scotties.
 ###
 module.exports = class OrganizationMethods
-  CREATE_FIELDS = ['name']
-  UPDATE_FIELDS = ['name', 'description', 'tags']
-
+  UPDATE_EXCLUDEFIELDS = ['_id','createdByUserId','createdAt']
   ###
   Initializes a new instance of the @see ScottyMethods class.
   @param {Object} models A collection of models that can be used.
@@ -50,9 +47,6 @@ module.exports = class OrganizationMethods
     settings = {}
     mongooseRestHelper.destroy @models.Organization,organizationId, settings,{}, cb
 
-
-
-
   getByName: (accountId, name, options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
@@ -72,4 +66,25 @@ module.exports = class OrganizationMethods
       @get nameOrId, cb
     else
       @getByName nameOrId, cb
+
+  ###
+  Patch an organization
+  ###
+  patch: (organizationId, obj = {}, options = {}, cb = ->) =>
+    return cb new Error "organizationId parameter is required." unless apporganizationIdId
+    settings =
+      exclude : UPDATE_EXCLUDEFIELDS
+    mongooseRestHelper.patch @models.Organization,organizationId, settings, obj, options, cb
+
+
+  ###
+  Creates a new organization.
+  ###
+  create: (accountId, objs = {},options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
+    objs.accountId = new ObjectId accountId.toString()
+
+    settings = {}
+    mongooseRestHelper.create @models.Organization,settings,objs,options,cb
+
 

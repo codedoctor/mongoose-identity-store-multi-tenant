@@ -31,9 +31,20 @@ module.exports = class Store
 
     configOauthProvider = @settings.oauthProvider || { scopes: []}
 
-    @schemas = [UserSchema,UserIdentitySchema,UserImageSchema,UserProfileSchema,EmailSchema,
-                OrganizationSchema,OauthAccessGrantSchema,OauthAccessTokenSchema,OauthAppSchema,
-                OauthRedirectUriSchema,OauthClientSchema,RoleSchema]
+    @schemas = [
+      UserSchema
+      UserIdentitySchema
+      UserImageSchema
+      UserProfileSchema
+      EmailSchema
+      OrganizationSchema
+      OauthAccessGrantSchema
+      OauthAccessTokenSchema
+      OauthAppSchema
+      OauthRedirectUriSchema
+      OauthClientSchema
+      RoleSchema
+    ]
 
     for schema in @schemas
       schema.set 'autoIndex', @settings.autoIndex
