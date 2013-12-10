@@ -32,7 +32,7 @@ class Helper
     tasks = []
 
     cleanDatabase @mongo,@database,@collections,@loggingEnabled, (err) =>
-      done()
+      done err
 
 
   stop: (done = ->) =>

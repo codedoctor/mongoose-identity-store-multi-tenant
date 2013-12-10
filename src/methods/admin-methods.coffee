@@ -28,7 +28,7 @@ module.exports = class AdminMethods
       password : password
       email : email
 
-    @users.create adminUser, (err, user) =>
+    @users.create accountId,adminUser,{}, (err, user) =>
       return cb err if err
 
       appData =
@@ -36,8 +36,9 @@ module.exports = class AdminMethods
         name : appName
         clientId : clientId
         secret : secret
+        createdByUserId : user._id
 
-      @oauthApps.create appData, user.toActor(), (err, app) =>
+      @oauthApps.create accountId,appData, {}, (err, app) =>
         return cb err if err
 
         clientId = app.clients[0].clientId

@@ -57,7 +57,7 @@ module.exports = class EntityMethods
     accountId = new ObjectId accountId.toString()
 
     if isObjectId(nameOrId)
-      @get nameOrId, {}, cb
+      @get nameOrId, options, cb
     else
-      @getByName accountId,nameOrId, {}, cb
+      @getByName accountId,nameOrId, options, cb
 

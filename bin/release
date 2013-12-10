@@ -6,4 +6,4 @@ pushd $BASEDIR/..
 
 ./node_modules/.bin/grunt release
 
-podp
+popd
