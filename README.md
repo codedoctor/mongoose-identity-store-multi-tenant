@@ -1,10 +1,6 @@
 TODO:
 
-* remove toRest
-* identityToRest better name
-* only expose schemas that need to be exposed
 * use mongooserest where possible (entity, users, oauth-auth)
-* allow for easy schema extension
 * add missing tests
 * look into refresh token
 * document
@@ -22,6 +18,9 @@ A bunch of mongoose schemas to implement identity management (users, accesstoken
 This is a work in progress, and some indexes need to be defined. You have been warned
 
 ## Release Notes
+### 0.3.22
+complete cleanup, signature overhaul.
+
 ### 0.3.5
 sarcasm: exporting the Role schema might be helpful too.
 

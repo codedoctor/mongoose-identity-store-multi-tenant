@@ -441,7 +441,7 @@ module.exports = class UserMethods
 
           # TODO: Add gravatar perhaps as well?
           for imageUrl in images
-            item.userImages.push new @models.UserImage
+            item.userImages.push # new @models.UserImage
               url : imageUrl
               # TODO: Add type here.
 
@@ -453,7 +453,10 @@ module.exports = class UserMethods
             item.selectedUserImage = images[0] if images.length > 0
 
           if provider is "facebook" && profile.profileUrl
-            item.profileLinks.push new @models.UserProfile
+
+
+
+            item.profileLinks.push # new @models.UserProfile
               linkUrl : profile.profileUrl
               linkIdentifier: profile.id
               provider : provider
@@ -463,7 +466,7 @@ module.exports = class UserMethods
               isPublic: true
 
           if provider is "twitter" 
-            item.profileLinks.push new @models.UserProfile
+            item.profileLinks.push # new @models.UserProfile
               linkUrl : "https://twitter.com/#{profile.username}"
               linkIdentifier: profile.username
               provider : provider
@@ -482,7 +485,7 @@ module.exports = class UserMethods
 
           # emails
           for email in emails
-            item.emails.push new @models.Email
+            item.emails.push new #@models.Email
               email : email.toLowerCase()
               isVerified : true # We assume so, because it comes from a social network
               sendNotifications : false # Dunno what this is good for.
@@ -499,7 +502,7 @@ module.exports = class UserMethods
           item.verified = profile._json?.verified
           item.roles = ['user-needs-setup']
 
-          newIdentity = new @models.UserIdentity
+          newIdentity = #new @models.UserIdentity
             provider: provider
             key: profile.id
             v1 : v1
@@ -572,7 +575,7 @@ module.exports = class UserMethods
       existing = _.find item.identities, (x) -> x.provider is provider
       existing.remove() if existing
 
-      newIdentity = new @models.UserIdentity
+      newIdentity = #new @models.UserIdentity
         provider: provider
         key: profile.id
         v1 : v1

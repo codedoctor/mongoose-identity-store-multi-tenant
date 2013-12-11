@@ -36,9 +36,11 @@ module.exports = class OauthAppMethods
       model = new @models.OauthApp objs
 
       if objs.callbackUrl
-        model.redirectUrls.push new @models.OauthRedirectUri(uri: objs.callbackUrl)
+        model.redirectUrls.push uri: objs.callbackUrl
+        #model.redirectUrls.push new @models.OauthRedirectUri(uri: objs.callbackUrl)
 
-      oAuthClient = new @models.OauthClient()
+      #oAuthClient = new @models.OauthClient()
+      oAuthClient = {}
       oAuthClient.clientId = optionalClientId if optionalClientId
       oAuthClient.secret = optionalSecret if optionalSecret
 

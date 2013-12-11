@@ -26,9 +26,17 @@ AdminMethods = require './methods/admin-methods'
 RoleMethods = require './methods/role-methods'
 
 module.exports = class Store
+
+  ###
+  Initializes a new instance of the {Store}
+  @param [Object] settings configuration options for this store
+  @param settings [Function] initializeSchema optional function that is called with the schema before it is converted to a model.
+  @param settings [Boolean] autoIndex defaults to true and updates the db indexes on load. Should be off for production.
+  ###
   constructor: (@settings = {}) ->
     _.defaults @settings, 
                   autoIndex : true
+                  initializeSchema: (schema) -> 
 
     configOauthProvider = @settings.oauthProvider || { scopes: []}
 
@@ -48,6 +56,9 @@ module.exports = class Store
       ScopeSchema
     ]
 
+    @settings.initializeSchema schema for schema in @schemas
+
+
     for schema in @schemas
       schema.set 'autoIndex', @settings.autoIndex
 
@@ -64,12 +75,12 @@ module.exports = class Store
       Scope: m.model "Scope",ScopeSchema
 
       # The following should NOT be models
-      UserIdentity: m.model "UserIdentity", UserIdentitySchema
-      UserImage: m.model "UserImage", UserImageSchema
-      UserProfile: m.model "UserProfile", UserProfileSchema
-      Email: m.model "Email", EmailSchema
-      OauthRedirectUri : m.model "OauthRedirectUri", OauthRedirectUriSchema
-      OauthClient : m.model "OauthClient", OauthClientSchema
+      #UserIdentity: m.model "UserIdentity", UserIdentitySchema
+      #UserImage: m.model "UserImage", UserImageSchema
+      #UserProfile: m.model "UserProfile", UserProfileSchema
+      #Email: m.model "Email", EmailSchema
+      #OauthRedirectUri : m.model "OauthRedirectUri", OauthRedirectUriSchema
+      #OauthClient : m.model "OauthClient", OauthClientSchema
 
     @users = new UserMethods @models
     @organizations = new OrganizationMethods @models
