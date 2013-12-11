@@ -38,8 +38,6 @@ module.exports = class Store
                   autoIndex : true
                   initializeSchema: (schema) -> 
 
-    configOauthProvider = @settings.oauthProvider || { scopes: []}
-
     @schemas = [
       UserSchema
       UserIdentitySchema
@@ -85,7 +83,7 @@ module.exports = class Store
     @users = new UserMethods @models
     @organizations = new OrganizationMethods @models
     @entities = new EntityMethods @models
-    @oauthScopes =  new OauthScopeMethods @models , configOauthProvider
+    @oauthScopes =  new OauthScopeMethods @models
     @oauthApps = new OauthAppMethods @models, @oauthScopes
     @oauthAuth = new OauthAuthMethods @models
     @admin = new AdminMethods @models, @users, @oauthApps, @oauthAuth,@oauthScopes
