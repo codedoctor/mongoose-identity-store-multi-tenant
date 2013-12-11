@@ -55,10 +55,7 @@ module.exports = class Store
     ]
 
     @settings.initializeSchema schema for schema in @schemas
-
-
-    for schema in @schemas
-      schema.set 'autoIndex', @settings.autoIndex
+    schema.set 'autoIndex', @settings.autoIndex for schema in @schemas
 
     m = mongoose
     m = @settings.connection if @settings.connection
