@@ -11,6 +11,8 @@ mongooseRestHelper = require 'mongoose-rest-helper'
 Provides methods to interact with the scope store.
 ###
 module.exports = class OauthScopeMethods
+  UPDATE_EXCLUDEFIELDS = ['_id']
+
 
   ###
   A hash of scopes.
@@ -37,26 +39,6 @@ module.exports = class OauthScopeMethods
           console.log "Invalid scope in config - skipped - #{JSON.stringify(scopeDefinition)}"
           # Todo: Better logging, error handling
 
-
-  all:(accountId,options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    options.count ||= 25
-    options.offset ||= 0
-
-    #TODO: when this is database driven, make sure you return the correct paging info
-    cb null, new PageResult(@loadedScopes || [], _.keys(@loadedScopes).length, options.offset, options.count)
-
-  get:(accountId,name, options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    cb null, @loadedScopes[name]
-
-
   # INTERNAL FUNCTIONS
   ###
   Returns an array of all scope names
@@ -65,8 +47,26 @@ module.exports = class OauthScopeMethods
   allScopeNamesAsArray: () =>
     _.pluck(_.values(@loadedScopes), "name")
 
-  getScope:(scope) =>
-    @loadedScopes[scope]
+  ###
+  Returns all the scopes for an account
+  ###
+  all: (accountId,options = {},cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
+
+    settings = 
+        baseQuery:
+          accountId : mongooseRestHelper.asObjectId accountId
+        defaultSort: 'name'
+        defaultSelect: null
+        defaultCount: 1000
+    mongooseRestHelper.all @models.Scope,settings,options, cb
+
+  ###
+  Get a scope for it's id.
+  ###
+  get: (scopeId,options = {}, cb = ->) =>
+    return cb new Error "scopeId parameter is required." unless scopeId
+    mongooseRestHelper.getById @models.Scope,scopeId,null,options, cb
 
 
   ###
@@ -76,5 +76,23 @@ module.exports = class OauthScopeMethods
     settings = {}
     objs.accountId = new ObjectId accountId.toString()
     mongooseRestHelper.create @models.Scope,settings,objs,options,cb
+
+  ###
+  Completely destroys an organization.
+  ###
+  destroy: (scopeId, options = {}, cb = ->) =>
+    return cb new Error "scopeId parameter is required." unless scopeId
+    settings = {}
+    mongooseRestHelper.destroy @models.Scope,scopeId, settings,{}, cb
+
+
+  ###
+  Updates a deployment
+  ###
+  patch: (scopeId, obj = {}, options = {}, cb = ->) =>
+    return cb new Error "scopeId parameter is required." unless scopeId
+    settings =
+      exclude : UPDATE_EXCLUDEFIELDS
+    mongooseRestHelper.patch @models.Scope,scopeId, settings, obj, options, cb
 
 

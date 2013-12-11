@@ -7,7 +7,7 @@ mongooseRestHelper = require 'mongoose-rest-helper'
 
 
 module.exports = class RoleMethods
-  UPDATE_FIELDS = ['name','description','isInternal']
+  UPDATE_EXCLUDEFIELDS = ['_id']
 
   constructor:(@models) ->
 
@@ -51,18 +51,15 @@ module.exports = class RoleMethods
     mongooseRestHelper.create @models.Role,settings,objs,options,cb
 
 
-  patch: (roleId, obj = {}, options={}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
+  ###
+  Updates a deployment
+  ###
+  patch: (scopeId, obj = {}, options = {}, cb = ->) =>
+    return cb new Error "scopeId parameter is required." unless scopeId
+    settings =
+      exclude : UPDATE_EXCLUDEFIELDS
+    mongooseRestHelper.patch @models.Role,scopeId, settings, obj, options, cb
 
-    @models.Role.findOne _id : roleId, (err,item) =>
-      return cb err if err
-      return cb new errors.NotFound("#{roleId}") unless item
 
-      _.extendFiltered item, UPDATE_FIELDS, obj
-      item.save (err) =>
-        return cb err if err
-        cb null, item
 
 
