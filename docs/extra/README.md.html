@@ -35,13 +35,13 @@
       </nav>
       <div id='filecontents'>
         <p>TODO:</p><ul>
-<li>fix auth token stuff, look into passports support for it</li>
-<li>improve code base to our current standards</li>
-<li>provide a hook to customize the schemas???</li>
-<li>only expose schemas that need to be exposed.</li>
+<li>use mongooserest where possible (entity, users, oauth-auth)</li>
+<li>add missing tests</li>
+<li>look into refresh token</li>
+<li>document</li>
 </ul>
 <h1 id="mongoose-identity-store-multi-tenant">mongoose-identity-store-multi-tenant</h1><p>npm install mongoose-identity-store-multi-tenant</p><p>NOTE - THIS IS EXPERIMENTAL.</p><p>A bunch of mongoose schemas to implement identity management (users, accesstokens, oauth apps)</p><p>This is a work in progress, and some indexes need to be defined. You have been warned</p><h2 id="release-notes">Release Notes</h2>
-<h3 id="0-3-5">0.3.5</h3><p>sarcasm: exporting the Role schema might be helpful too.</p><h3 id="0-3-4">0.3.4</h3><p>exposed role management methods</p><h3 id="0-3-3">0.3.3</h3><p>updated versions
+<h3 id="0-3-22">0.3.22</h3><p>complete cleanup, signature overhaul.</p><h3 id="0-3-5">0.3.5</h3><p>sarcasm: exporting the Role schema might be helpful too.</p><h3 id="0-3-4">0.3.4</h3><p>exposed role management methods</p><h3 id="0-3-3">0.3.3</h3><p>updated versions
 allow for models to be created from connections</p><h3 id="0-3-2">0.3.2</h3><p>Bug fix: On creation of a facebook account that has an invalid email address don&#39;t blow up.
 Reason: If a user has a facebook account associated with an invalid address facebook returns a bogus record...</p><h3 id="0-3-1">0.3.1</h3><p>Added autoIndex option to store creation, defaults to true. Updated dependencies</p><h3 id="0-3-0">0.3.0</h3><p>Bumped some of deps up, especially mongoose</p><h3 id="0-2-7">0.2.7</h3><p>Added retrieval of users by usernames</p><h3 id="0-2-6">0.2.6</h3><p>Added lookup method for fast mention lookup to users.</p><h3 id="0-2-5">0.2.5</h3><p>bcrypt update, fixes memory leak or so they say</p><h3 id="0-2-4">0.2.4</h3><p>Added tests, and getByIds</p><h3 id="0-2-3">0.2.3</h3><p>destroy paranoid users too</p><h3 id="0-2-2">0.2.2</h3><p>added user.destroy</p><h3 id="0-2-0">0.2.0</h3>
 <ul>
@@ -66,7 +66,7 @@ further details.</p>
       </div>
     </div>
     <div id='footer'>
-  December 11, 13 08:16:42 by
+  December 11, 13 10:06:33 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>

@@ -1,29 +1,29 @@
-mongoose = require 'mongoose'
 _ = require 'underscore'
+mongoose = require 'mongoose'
 
-UserSchema = require './schemas/user-schema'
-OrganizationSchema = require './schemas/organization-schema'
-UserIdentitySchema = require './schemas/user-identity-schema'
-UserImageSchema = require './schemas/user-image-schema'
-UserProfileSchema = require './schemas/user-profile-schema'
+
 EmailSchema = require './schemas/email-schema'
-
 OauthAccessGrantSchema = require './schemas/oauth-access-grant-schema'
 OauthAccessTokenSchema = require './schemas/oauth-access-token-schema'
 OauthAppSchema = require './schemas/oauth-app-schema'
-OauthRedirectUriSchema = require './schemas/oauth-redirect-uri-schema'
 OauthClientSchema = require './schemas/oauth-client-schema'
+OauthRedirectUriSchema = require './schemas/oauth-redirect-uri-schema'
+OrganizationSchema = require './schemas/organization-schema'
 RoleSchema = require './schemas/role-schema'
 ScopeSchema = require './schemas/scope-schema'
+UserIdentitySchema = require './schemas/user-identity-schema'
+UserImageSchema = require './schemas/user-image-schema'
+UserProfileSchema = require './schemas/user-profile-schema'
+UserSchema = require './schemas/user-schema'
 
-UserMethods = require './methods/user-methods'
-OrganizationMethods = require './methods/organization-methods'
+AdminMethods = require './methods/admin-methods'
 EntityMethods = require './methods/entity-methods'
 OauthAppMethods = require './methods/oauth-app-methods'
 OauthAuthMethods = require './methods/oauth-auth-methods'
 OauthScopeMethods = require './methods/oauth-scope-methods'
-AdminMethods = require './methods/admin-methods'
+OrganizationMethods = require './methods/organization-methods'
 RoleMethods = require './methods/role-methods'
+UserMethods = require './methods/user-methods'
 
 module.exports = class Store
 
@@ -39,19 +39,19 @@ module.exports = class Store
                   initializeSchema: (schema) -> 
 
     @schemas = [
-      UserSchema
-      UserIdentitySchema
-      UserImageSchema
-      UserProfileSchema
       EmailSchema
-      OrganizationSchema
       OauthAccessGrantSchema
       OauthAccessTokenSchema
       OauthAppSchema
-      OauthRedirectUriSchema
       OauthClientSchema
+      OauthRedirectUriSchema
+      OrganizationSchema
       RoleSchema
       ScopeSchema
+      UserIdentitySchema
+      UserImageSchema
+      UserProfileSchema
+      UserSchema
     ]
 
     @settings.initializeSchema schema for schema in @schemas
@@ -61,28 +61,20 @@ module.exports = class Store
     m = @settings.connection if @settings.connection
 
     @models =
-      User : m.model "User", UserSchema
-      Role : m.model "Role", RoleSchema
-      Organization : m.model "Organization", OrganizationSchema
       OauthAccessGrant : m.model "OAuthAccessGrant", OauthAccessGrantSchema
       OauthAccessToken : m.model "OauthAccessToken", OauthAccessTokenSchema
       OauthApp : m.model "OauthApp", OauthAppSchema
+      Organization : m.model "Organization", OrganizationSchema
+      Role : m.model "Role", RoleSchema
       Scope: m.model "Scope",ScopeSchema
-
-      # The following should NOT be models
-      #UserIdentity: m.model "UserIdentity", UserIdentitySchema
-      #UserImage: m.model "UserImage", UserImageSchema
-      #UserProfile: m.model "UserProfile", UserProfileSchema
-      #Email: m.model "Email", EmailSchema
-      #OauthRedirectUri : m.model "OauthRedirectUri", OauthRedirectUriSchema
-      #OauthClient : m.model "OauthClient", OauthClientSchema
-
-    @users = new UserMethods @models
-    @organizations = new OrganizationMethods @models
+      User : m.model "User", UserSchema
+    
     @entities = new EntityMethods @models
-    @oauthScopes =  new OauthScopeMethods @models
-    @oauthApps = new OauthAppMethods @models, @oauthScopes
     @oauthAuth = new OauthAuthMethods @models
-    @admin = new AdminMethods @models, @users, @oauthApps, @oauthAuth,@oauthScopes
+    @oauthScopes =  new OauthScopeMethods @models
+    @organizations = new OrganizationMethods @models
     @roles = new RoleMethods @models
+    @users = new UserMethods @models
+    @oauthApps = new OauthAppMethods @models, @oauthScopes
+    @admin = new AdminMethods @models, @users, @oauthApps, @oauthAuth,@oauthScopes
 
