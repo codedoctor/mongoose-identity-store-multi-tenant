@@ -91,33 +91,3 @@ OauthAppSchema.plugin pluginAccessibleBy.accessibleBy, defaultIsPublic : false
 OauthAppSchema.virtual('key').get ->
   @clients[0].clientId
 
-
-OauthAppSchema.methods.toRest = (baseUrl, actor) ->
-  res =
-    url : "#{baseUrl}/#{@_id}"
-    id : @_id
-    name : @name
-    description : @description
-    websiteUrl: @websiteUrl
-    imageUrl: @imageUrl
-    callbackUrl: @callbackUrl
-    notes: @notes
-    scopes: @scopes
-    revoked: @revoked
-    acceptTermsOfService: @acceptTermsOfService
-    isPublished: @isPublished
-    organizationName: @organizationName
-    organizationUrl: @organizationUrl
-    tosAcceptanceDate: @tosAcceptanceDate
-    clients: _.map(_.filter( @clients || [], (x) -> !x.revokedAt), (x) => if x.toRest then x.toRest("#{baseUrl}/#{@_id}/clients", actor) else x)
-    redirectUrls: @redirectUrls
-    stats: @stats
-    tags : @tags
-    createdAt: @createdAt
-    updatedAt: @updatedAt
-    createdBy : @createdBy
-    accessibleBy: @accessibleBy
-    isDeleted : @isDeleted || false
-    deletedAt : @deletedAt || null
-  res
-

@@ -22,6 +22,9 @@ module.exports = class AdminMethods
     throw new Error "oauthAuth parameter is required" unless @oauthAuth
     throw new Error "oauthScopes parameter is required" unless @oauthScopes
 
+  ###
+  Sets up an account ready for use.
+  ###
   setup: (accountId,appName, username, email, password,scopes = [], clientId = null, secret = null,options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 

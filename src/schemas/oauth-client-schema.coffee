@@ -20,12 +20,4 @@ module.exports = OauthClientSchema = new mongoose.Schema
   , 
     strict: true
 
-OauthClientSchema.methods.toRest = (baseUrl, actor) ->
-  res =
-    url : "#{baseUrl}/#{@_id}"
-    id : @_id
-    clientId : @clientId
-    secret : @secret
-    createdAt : @createdAt
-    revokedAt : @revokedAt
-  res
+

@@ -24,17 +24,3 @@ module.exports = UserIdentitySchema = new mongoose.Schema
     default: ''
 
 
-UserIdentitySchema.methods.toRest = (baseUrl, actor) ->
-  res =
-    url : "#{baseUrl}/#{@_id}"
-    id : @_id
-    provider : @provider
-    key : @key
-    v1 : @v1
-    v2 : @v2
-    providerType : @providerType
-    username : @username
-    displayName : @displayName
-    profileImage : @profileImage
-  res
-

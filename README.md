@@ -1,9 +1,13 @@
 TODO:
 
-* fix auth token stuff, look into passports support for it
-* improve code base to our current standards
-* provide a hook to customize the schemas???
-* only expose schemas that need to be exposed.
+* remove toRest
+* identityToRest better name
+* only expose schemas that need to be exposed
+* use mongooserest where possible (entity, users, oauth-auth)
+* allow for easy schema extension
+* add missing tests
+* look into refresh token
+* document
 
 mongoose-identity-store-multi-tenant
 ===========================

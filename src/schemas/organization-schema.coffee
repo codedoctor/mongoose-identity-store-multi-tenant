@@ -61,26 +61,6 @@ OrganizationSchema.plugin pluginAccessibleBy.accessibleBy, defaultIsPublic : tru
 OrganizationSchema.plugin pluginResourceLimits.resourceLimits
 
 
-OrganizationSchema.methods.toRest = (baseUrl, actor) ->
-  res =
-    url : "#{baseUrl}/#{@_id}"
-    id : @_id
-    name : @name
-    description : @description
-    stats : @stats || {}
-    resourceLimits : @resourceLimits || {}
-    profileLinks : @profileLinks || []
-    data : @data || {}
-
-    tags : @tags
-    createdAt: @createdAt
-    updatedAt: @updatedAt
-    createdBy : @createdBy
-    accessibleBy: @accessibleBy
-    isDeleted : @isDeleted || false
-    deletedAt : @deletedAt || null
-  res
-
 
 OrganizationSchema.statics.findOneValidate = (organizationId, actor, role, cb = ->) ->
   return cb new Error("organizationId is a required parameter") unless organizationId
