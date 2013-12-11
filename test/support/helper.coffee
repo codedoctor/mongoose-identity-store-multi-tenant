@@ -19,7 +19,9 @@ class Helper
     'identitymt.oauthclients'
     'identitymt.organizations'
     'identitymt.users'
-    'identitymt.roles']
+    'identitymt.roles'
+    'identitymt.scopes'
+  ]
 
   start: (obj = {}, done = ->) =>
     _.defaults obj, 

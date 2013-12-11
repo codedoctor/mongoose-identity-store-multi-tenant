@@ -7,7 +7,6 @@ mongooseRestHelper = require 'mongoose-rest-helper'
 
 
 module.exports = class RoleMethods
-  CREATE_FIELDS = ['_id','name','description','isInternal']
   UPDATE_FIELDS = ['name','description','isInternal']
 
   constructor:(@models) ->
@@ -47,16 +46,10 @@ module.exports = class RoleMethods
   Create a new processDefinition
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
+    settings = {}
     objs.accountId = new ObjectId accountId.toString()
+    mongooseRestHelper.create @models.Role,settings,objs,options,cb
 
-    model = new @models.Role(objs)
-    model.save (err) =>
-      return cb err if err
-      cb null, model,true
 
   patch: (roleId, obj = {}, options={}, cb = ->) =>
     if _.isFunction(options)

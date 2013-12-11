@@ -14,6 +14,7 @@ OauthAppSchema = require './schemas/oauth-app-schema'
 OauthRedirectUriSchema = require './schemas/oauth-redirect-uri-schema'
 OauthClientSchema = require './schemas/oauth-client-schema'
 RoleSchema = require './schemas/role-schema'
+ScopeSchema = require './schemas/scope-schema'
 
 UserMethods = require './methods/user-methods'
 OrganizationMethods = require './methods/organization-methods'
@@ -44,6 +45,7 @@ module.exports = class Store
       OauthRedirectUriSchema
       OauthClientSchema
       RoleSchema
+      ScopeSchema
     ]
 
     for schema in @schemas
@@ -59,6 +61,7 @@ module.exports = class Store
       OauthAccessGrant : m.model "OAuthAccessGrant", OauthAccessGrantSchema
       OauthAccessToken : m.model "OauthAccessToken", OauthAccessTokenSchema
       OauthApp : m.model "OauthApp", OauthAppSchema
+      Scope: m.model "Scope",ScopeSchema
 
       # The following should NOT be models
       UserIdentity: m.model "UserIdentity", UserIdentitySchema

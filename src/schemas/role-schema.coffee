@@ -7,9 +7,10 @@ module.exports = RoleSchema = new mongoose.Schema
       index : true
     name:
       type : String
-      unique: true
+      default: ''
     description:
       type : String
+      default: ''
     isInternal:
       type : Boolean
       default: false
