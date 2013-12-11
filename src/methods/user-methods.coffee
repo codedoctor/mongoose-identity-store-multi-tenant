@@ -49,9 +49,6 @@ module.exports = class UserMethods
     return cb new Error "userId parameter is required." unless userId
     mongooseRestHelper.getById @models.User,userId,null,options, cb
 
-
-
-
   ###
   Retrieves users by passing a list of id's, which can be string or objectIds
   ###

@@ -4,7 +4,7 @@ mongoose = require "mongoose"
 ObjectId = mongoose.Types.ObjectId
 bcrypt = require 'bcryptjs'
 passgen = require 'passgen'
-
+async = require 'async'
 
 ###
 Provides methods to interact with scotties.
@@ -15,13 +15,18 @@ module.exports = class AdminMethods
   Initializes a new instance of the @see ScottyMethods class.
   @param {Object} models A collection of models that can be used.
   ###
-  constructor:(@models, @users, @oauthApps, @oauthAuth) ->
+  constructor:(@models, @users, @oauthApps, @oauthAuth,@oauthScopes) ->
     throw new Error "models parameter is required" unless @models
     throw new Error "users parameter is required" unless @users
     throw new Error "oauthApps parameter is required" unless @oauthApps
     throw new Error "oauthAuth parameter is required" unless @oauthAuth
+    throw new Error "oauthScopes parameter is required" unless @oauthScopes
 
-  setup: (accountId,appName, username, email, password, clientId = null, secret = null, cb = ->) =>
+  setup: (accountId,appName, username, email, password,scopes = [], clientId = null, secret = null,options = {}, cb = ->) =>
+    if _.isFunction(options)
+      cb = options 
+      options = {}
+
     adminUser =
       accountId : accountId
       username : username
@@ -38,18 +43,25 @@ module.exports = class AdminMethods
         secret : secret
         createdByUserId : user._id
 
-      @oauthApps.create accountId,appData, {}, (err, app) =>
+
+      _createScope = (scope,cb) =>
+        @oauthScopes.create accountId,scope,null, cb
+
+      async.map scopes, _createScope, (err,createdScopes) =>
         return cb err if err
 
-        clientId = app.clients[0].clientId
-        return cb new Error "Failed to create app client" unless clientId
-
-        @oauthAuth.createOrReuseTokenForUserId user._id, clientId, null, null, null, (err, token) =>
+        @oauthApps.create accountId,appData, {}, (err, app) =>
           return cb err if err
-          return cb new errors.NotFound(req.url) unless token # TODO: Different error
 
-          token =
-            accessToken : token.accessToken
-            refreshToken : token.refreshToken
-          cb null, app, user, token
+          clientId = app.clients[0].clientId
+          return cb new Error "Failed to create app client" unless clientId
+
+          @oauthAuth.createOrReuseTokenForUserId user._id, clientId, null, null, null, (err, token) =>
+            return cb err if err
+            return cb new Error "Failed to create token" unless token
+
+            token =
+              accessToken : token.accessToken
+              refreshToken : token.refreshToken
+            cb null, app, user, token,createdScopes || []
 

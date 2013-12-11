@@ -77,6 +77,6 @@ module.exports = class Store
     @oauthScopes =  new OauthScopeMethods @models , configOauthProvider
     @oauthApps = new OauthAppMethods @models, @oauthScopes
     @oauthAuth = new OauthAuthMethods @models
-    @admin = new AdminMethods @models, @users, @oauthApps, @oauthAuth
+    @admin = new AdminMethods @models, @users, @oauthApps, @oauthAuth,@oauthScopes
     @roles = new RoleMethods @models
 

@@ -39,13 +39,11 @@ module.exports = class RoleMethods
     mongooseRestHelper.destroy @models.Role,roleId, settings,{}, cb
 
 
-
-
-
   ###
   Create a new processDefinition
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
     settings = {}
     objs.accountId = new ObjectId accountId.toString()
     mongooseRestHelper.create @models.Role,settings,objs,options,cb

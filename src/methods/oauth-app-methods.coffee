@@ -8,7 +8,7 @@ mongooseRestHelper = require 'mongoose-rest-helper'
 module.exports = class OauthAppMethods
   KEY_LENGTH = 20
   SECRET_LENGTH = 40
-  APP_CREATE_FIELDS =  ['name', 'websiteUrl', 'imageUrl', 'notes', 'tosAcceptanceDate', 'scope', 'description', 'acceptTermsOfService', 'isPublished', 'organizationName', 'organizationUrl']
+  UPDATE_EXCLUDEFIELDS = ['_id','createdAt']
 
   constructor:(@models, @scopeMethods) ->
     throw new Error("models parameter is required") unless @models
@@ -26,30 +26,26 @@ module.exports = class OauthAppMethods
 
     objs.accountId = new ObjectId accountId.toString()
 
-    optionalClientId = objs.clientId
-    optionalSecret = objs.secret
-
-    data = {}
-    ###
-    @TODO Make this safe, but invert it.
-    ###
-    _.extendFiltered data, APP_CREATE_FIELDS, objs
-    data.createdByUserId = objs.createdByUserId
-
-    data.scopes = @scopeMethods.allScopeNamesAsArray()
-    model = new @models.OauthApp(data)
-
-    if objs.callbackUrl
-      model.redirectUrls.push new @models.OauthRedirectUri(uri: objs.callbackUrl)
-
-    oAuthClient = new @models.OauthClient()
-    oAuthClient.clientId = optionalClientId if optionalClientId
-    oAuthClient.secret = optionalSecret if optionalSecret
-
-    model.clients.push oAuthClient
-    model.save (err) =>
+    @models.Scope.find accountId : objs.accountId, (err, scopes) =>
       return cb err if err
-      cb null, model
+  
+      optionalClientId = objs.clientId
+      optionalSecret = objs.secret
+
+      objs.scopes = _.pluck(scopes || [], "name")
+      model = new @models.OauthApp objs
+
+      if objs.callbackUrl
+        model.redirectUrls.push new @models.OauthRedirectUri(uri: objs.callbackUrl)
+
+      oAuthClient = new @models.OauthClient()
+      oAuthClient.clientId = optionalClientId if optionalClientId
+      oAuthClient.secret = optionalSecret if optionalSecret
+
+      model.clients.push oAuthClient
+      model.save (err) =>
+        return cb err if err
+        cb null, model
 
 
   ###
@@ -88,14 +84,9 @@ module.exports = class OauthAppMethods
   ###
   get: (oauthAppId,options={}, cb = ->) =>
     return cb new Error "oauthAppId parameter is required." unless oauthAppId
+    mongooseRestHelper.getById @models.OauthApp,oauthAppId,null,options, cb
 
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-    oauthAppId = new ObjectId oauthAppId.toString()
-    @models.OauthApp.findOne _id : oauthAppId, (err, item) =>
-      return cb err if err
-      cb null, item
+
 
   ###
   Completely destroys an app.
@@ -133,17 +124,7 @@ module.exports = class OauthAppMethods
   patch: (oauthAppId, data = {},options = {}, cb = ->) =>
     return cb new Error "oauthAppId parameter is required." unless oauthAppId
 
-    if _.isFunction(options)
-      cb = options 
-      options = {}
-
-    oauthAppId = new ObjectId oauthAppId.toString()
-    @models.OauthApp.findOne _id : oauthAppId, (err, item) =>
-      return cb err if err
-
-      _.extend item, data
-
-      item.save (err) =>
-        return cb err if err
-        cb null, item
+    settings =
+      exclude : UPDATE_EXCLUDEFIELDS
+    mongooseRestHelper.patch @models.OauthApp,oauthAppId, settings, obj, options, cb
 

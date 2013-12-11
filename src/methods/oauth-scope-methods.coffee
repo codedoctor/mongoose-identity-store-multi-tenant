@@ -17,7 +17,7 @@ module.exports = class OauthScopeMethods
   ###
   A hash of scopes.
   ###
-  loadedScopes : {}
+  #loadedScopes : {}
 
   ###
   Initializes a new instance of the @see ScopeMethods class.
@@ -27,6 +27,7 @@ module.exports = class OauthScopeMethods
   ...
   scopes: [...]
   ...
+  ###
   ###
   constructor:(@models, config) ->
     if config && config.scopes
@@ -38,14 +39,10 @@ module.exports = class OauthScopeMethods
         else
           console.log "Invalid scope in config - skipped - #{JSON.stringify(scopeDefinition)}"
           # Todo: Better logging, error handling
+  ###
 
-  # INTERNAL FUNCTIONS
-  ###
-  Returns an array of all scope names
-  @sync
-  ###
-  allScopeNamesAsArray: () =>
-    _.pluck(_.values(@loadedScopes), "name")
+  constructor:(@models) ->
+
 
   ###
   Returns all the scopes for an account
@@ -73,6 +70,7 @@ module.exports = class OauthScopeMethods
   Create a new processDefinition
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
     settings = {}
     objs.accountId = new ObjectId accountId.toString()
     mongooseRestHelper.create @models.Scope,settings,objs,options,cb
