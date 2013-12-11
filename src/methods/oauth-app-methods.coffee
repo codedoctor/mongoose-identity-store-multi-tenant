@@ -121,7 +121,7 @@ module.exports = class OauthAppMethods
   ###
   Update an app.
   ###
-  patch: (oauthAppId, data = {},options = {}, cb = ->) =>
+  patch: (oauthAppId, obj = {},options = {}, cb = ->) =>
     return cb new Error "oauthAppId parameter is required." unless oauthAppId
 
     settings =

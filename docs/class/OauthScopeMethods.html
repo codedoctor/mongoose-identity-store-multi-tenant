@@ -11,8 +11,8 @@
     <div id='base' data-path='../'></div>
 <div id='header'>
   <div id='menu'>
-    <a href='../extra/README.md.html' title='Mongoose-identity-store-multi-tenant2'>
-      Mongoose-identity-store-multi-tenant2
+    <a href='../extra/README.md.html' title='Mongoose-identity-store-multi-tenant'>
+      Mongoose-identity-store-multi-tenant
     </a>
     &raquo;
     <a href='../alphabetical_index.html' title='Index'>
@@ -39,21 +39,6 @@
 </div>
 <div class='tags'>
 </div>
-      <h2>Variables Summary</h2>
-      <dl class='constants'>
-  <dt id='loadedScopes-variable'>
-    loadedScopes
-    =
-  </dt>
-  <dd>
-    <pre><code class='coffeescript'>{}</code></pre>
-    <div class='docstring'>
-  <p>A hash of scopes.</p>
-</div>
-<div class='tags'>
-</div>
-  </dd>
-</dl>
       <h2>Instance Method Summary</h2>
       <ul class='summary'>
   <li>
@@ -61,11 +46,12 @@
       <a href='#all-dynamic'>
         #
 (void)
-<b>all</b><span>(offset = 0, count = 25, options = {}, cb = function() {})</span>
+<b>all</b><span>(accountId, options = {}, cb = function() {})</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Returns all the scopes for an account 
     </span>
   </li>
   <li>
@@ -73,36 +59,51 @@
       <a href='#get-dynamic'>
         #
 (void)
-<b>get</b><span>(name, options = {}, cb = function() {})</span>
+<b>get</b><span>(scopeId, options = {}, cb = function() {})</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Get a scope for it&#39;s id. 
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#allScopeNamesAsArray-dynamic'>
+      <a href='#create-dynamic'>
         #
 (void)
-<b>allScopeNamesAsArray</b><span>()</span>
+<b>create</b><span>(accountId, objs = {}, options = {}, cb = function() {})</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
-      INTERNAL FUNCTIONS 
+      Create a new processDefinition 
     </span>
   </li>
   <li>
     <span class='signature'>
-      <a href='#getScope-dynamic'>
+      <a href='#destroy-dynamic'>
         #
 (void)
-<b>getScope</b><span>(scope)</span>
+<b>destroy</b><span>(scopeId, options = {}, cb = function() {})</span>
       </a>
     </span>
     <span class='bound note title'>Bound</span>
     <span class='desc'>
+      Completely destroys an organization. 
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#patch-dynamic'>
+        #
+(void)
+<b>patch</b><span>(scopeId, obj = {}, options = {}, cb = function() {})</span>
+      </a>
+    </span>
+    <span class='bound note title'>Bound</span>
+    <span class='desc'>
+      Updates a deployment 
     </span>
   </li>
 </ul>
@@ -112,29 +113,20 @@
     <p class='signature' id='constructor-dynamic'>
       #
 (void)
-<b>constructor</b><span>(models, config)</span>
+<b>constructor</b><span>(models)</span>
       <br>
     </p>
     <div class='docstring'>
-  <p>Initializes a new instance of the @see ScopeMethods class.
-@description
-The config object looks like this:
-...
-scopes: [...]
-...</p>
+  <p>constructor:(@models, config) -&gt; if config &amp;&amp; config.scopes
+    for scopeDefinition in config.scopes
+      scope = new Scope(scopeDefinition)</p><pre><code>  if scope.isValid()
+    @loadedScopes[scope.name] = scope
+  else
+    console.log &quot;Invalid scope in config - skipped - #{JSON.stringify(scopeDefinition)}&quot;
+    # Todo: Better logging, error handling</code></pre>
+
 </div>
 <div class='tags'>
-  <h3>Parameters:</h3>
-  <ul class='param'>
-    <li>
-      <span class='name'>models</span>
-      <span class='type'>
-        (<tt>Object</tt>)
-      </span>
-      &mdash;
-      <span class='desc'>A collection of models to be used within the auth framework. </span>
-    </li>
-  </ul>
 </div>
   </div>
 </div>
@@ -144,50 +136,76 @@ scopes: [...]
     <p class='signature' id='all-dynamic'>
       #
 (void)
-<b>all</b><span>(offset = 0, count = 25, options = {}, cb = function() {})</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='get-dynamic'>
-      #
-(void)
-<b>get</b><span>(name, options = {}, cb = function() {})</span>
-      <span class='bound note'>Bound</span>
-      <br>
-    </p>
-    
-  </div>
-  <div class='method_details'>
-    <p class='signature' id='allScopeNamesAsArray-dynamic'>
-      #
-(void)
-<b>allScopeNamesAsArray</b><span>()</span>
+<b>all</b><span>(accountId, options = {}, cb = function() {})</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
     <div class='docstring'>
-  <p>INTERNAL FUNCTIONS</p>
+  <p>Returns all the scopes for an account</p>
 </div>
 <div class='tags'>
 </div>
   </div>
   <div class='method_details'>
-    <p class='signature' id='getScope-dynamic'>
+    <p class='signature' id='get-dynamic'>
       #
 (void)
-<b>getScope</b><span>(scope)</span>
+<b>get</b><span>(scopeId, options = {}, cb = function() {})</span>
       <span class='bound note'>Bound</span>
       <br>
     </p>
-    
+    <div class='docstring'>
+  <p>Get a scope for it&#39;s id.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='create-dynamic'>
+      #
+(void)
+<b>create</b><span>(accountId, objs = {}, options = {}, cb = function() {})</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Create a new processDefinition</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='destroy-dynamic'>
+      #
+(void)
+<b>destroy</b><span>(scopeId, options = {}, cb = function() {})</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Completely destroys an organization.</p>
+</div>
+<div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='patch-dynamic'>
+      #
+(void)
+<b>patch</b><span>(scopeId, obj = {}, options = {}, cb = function() {})</span>
+      <span class='bound note'>Bound</span>
+      <br>
+    </p>
+    <div class='docstring'>
+  <p>Updates a deployment</p>
+</div>
+<div class='tags'>
+</div>
   </div>
 </div>
     </div>
     <div id='footer'>
-  December 10, 13 21:17:22 by
+  December 11, 13 08:16:42 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
