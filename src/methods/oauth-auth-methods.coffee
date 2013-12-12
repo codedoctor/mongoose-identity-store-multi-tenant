@@ -46,7 +46,7 @@ module.exports = class OauthAuthMethods
     @models.OauthApp.findOne 'clients.clientId' : clientId, (err, item) =>
       return cb err if err
       # TODO: Mutliple keys, check if revoked
-      cb(null, item)
+      cb null, item
 
   ###
   Somehow validates a token. A valid token exists, has not been revoked yet,
@@ -204,6 +204,7 @@ module.exports = class OauthAuthMethods
         return cb err if err
 
         newToken = new @models.OauthAccessToken
+          accountId : token.accountId
           appId: token.appId
           identityUserId: token.userId
           realm: token.realm
