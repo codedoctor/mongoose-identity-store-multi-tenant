@@ -43,11 +43,11 @@ module.exports = class AdminMethods
       username : username
       password : password
       displayName: 'ADMIN'
-      roles: ['admin']
+      roles: ['admin','serveradmin']
       email : email
 
     # @TODO Check if user exists, if so, do nothing
-    
+
     @users.create accountId,adminUser,{}, (err, user) =>
       return cb err if err
 
