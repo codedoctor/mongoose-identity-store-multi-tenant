@@ -79,7 +79,7 @@ module.exports = class OauthAppMethods
     options.where ||= {}
     options.where.createdByUserId = new ObjectId owningUserId.toString()
 
-    @getAll accountId,options,cb
+    @all accountId,options,cb
 
   ###
   returns a specific oauth app.
@@ -87,8 +87,6 @@ module.exports = class OauthAppMethods
   get: (oauthAppId,options={}, cb = ->) =>
     return cb new Error "oauthAppId parameter is required." unless oauthAppId
     mongooseRestHelper.getById @models.OauthApp,oauthAppId,null,options, cb
-
-
 
   ###
   Completely destroys an app.
@@ -107,7 +105,6 @@ module.exports = class OauthAppMethods
     if _.isFunction(options)
       cb = options 
       options = {}
-
 
     oauthAppId = new ObjectId oauthAppId.toString()
     @models.OauthApp.findOne _id : oauthAppId, (err, item) =>

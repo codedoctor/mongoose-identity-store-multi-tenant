@@ -84,7 +84,7 @@ module.exports = class OauthAuthMethods
   @param {String} realm an optional realm for which this access grant is for.
   @param {Callback} cb the callback that will be invoked, with err and the mongoose AccessGrant model.
   ###
-  createAccessGrant: (appId, userId, redirectUrl, scope, realm = null, options = {}, cb = ->) =>
+  createAccessGrant: (accountId,appId, userId, redirectUrl, scope, realm = null, options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
@@ -95,6 +95,7 @@ module.exports = class OauthAuthMethods
     return cb new Error "scope parameter missing in createAccessGrant" unless scope && scope.length > 0
 
     accessGrant = new @models.OauthAccessGrant
+      accountId : accountId
       appId : appId
       identityUserId: userId
       realm : realm
@@ -109,18 +110,28 @@ module.exports = class OauthAuthMethods
   ###
   Creates a token for a user/app/realm
   ###
-  createOrReuseTokenForUserId: (userId, clientId, realm, scope , expiresIn,options = {}, cb = ->) =>
+  createOrReuseTokenForUserId: (accountId,userId, clientId, realm, scope , expiresIn,options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
 
-    @createTokenForUserId userId, clientId, realm, scope, expiresIn,options, cb
+    userId = new ObjectId userId.toString()
+
+    @appForClientId clientId, (err, app) =>
+      return cb err if err
+      return cb new Error("Could not find app for clientId #{clientId}") unless app
+
+      @models.OauthAccessToken.findOne {accountId : accountId, appId: app._id, identityUserId: userId}, (err,token) =>
+        return cb err if err
+        return cb null, token if token
+
+        @createTokenForUserId accountId,userId, clientId, realm, scope, expiresIn,options, cb
 
 
   ###
   Creates a token for a user/app/realm
   ###
-  createTokenForUserId: (userId, clientId, realm =  null, scope = null, expiresIn = null, options = {}, cb = ->) =>
+  createTokenForUserId: (accountId, userId, clientId, realm =  null, scope = null, expiresIn = null, options = {}, cb = ->) =>
     if _.isFunction(options)
       cb = options 
       options = {}
@@ -130,6 +141,7 @@ module.exports = class OauthAuthMethods
       return cb new Error("Could not find app for clientId #{clientId}") unless app
 
       token = new @models.OauthAccessToken
+        accountId : accountId
         appId: app._id
         identityUserId: userId
         realm: realm
@@ -138,7 +150,7 @@ module.exports = class OauthAuthMethods
 
       token.save (err) =>
           return cb err if err
-          cb(null, token)
+          cb null, token
 
   ###
   Takes a code and exchanges it for an access token

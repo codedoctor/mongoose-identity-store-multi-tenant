@@ -50,14 +50,15 @@ module.exports = class UserMethods
     mongooseRestHelper.getById @models.User,userId,null,options, cb
 
   ###
+  @TODO mongooseRest
   Retrieves users by passing a list of id's, which can be string or objectIds
   ###
   getByIds:(idList = [], options =  {}, cb = ->) =>
+    idList = _.map idList, (x) -> new ObjectId x.toString()
+
     if _.isFunction(options)
       cb = options 
       options = {}
-
-    idList = _.map idList, (x) -> new ObjectId x.toString()
 
     @models.User.find({}).where('_id').in(idList).exec (err, items) =>
       return cb err if err
@@ -66,6 +67,7 @@ module.exports = class UserMethods
       cb null, new PageResult(items, items.length, 0, 99999999)
 
   ###
+  @TODO mongooseRest
   Retrieves users by passing a list of usernames.
   @param {[String]} usernames an array of usernames. Case insensitive
   @param {Object} options a set of options, which can be null
@@ -261,11 +263,11 @@ module.exports = class UserMethods
     
     @findUserByUsernameOrEmail accountId,usernameOrEmail, (err, user) =>
       return cb err if err
-      return cb(null, null) unless user
+      return cb null, null unless user
       bcrypt.compare password, user.password, (err, res) =>
         return cb err if err
-        return cb(null, null) unless res
-        cb(null, user)
+        return cb null, null unless res
+        cb null, user
 
   #verifyPassword: (hash)
   #bcrypt.compare("B4c0/\/", hash, function(err, res)

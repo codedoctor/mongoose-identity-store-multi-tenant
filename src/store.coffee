@@ -30,8 +30,8 @@ module.exports = class Store
   ###
   Initializes a new instance of the {Store}
   @param [Object] settings configuration options for this store
-  @param settings [Function] initializeSchema optional function that is called with the schema before it is converted to a model.
-  @param settings [Boolean] autoIndex defaults to true and updates the db indexes on load. Should be off for production.
+  @option settings [Function] initializeSchema optional function that is called with the schema before it is converted to a model.
+  @option settings [Boolean] autoIndex defaults to true and updates the db indexes on load. Should be off for production.
   ###
   constructor: (@settings = {}) ->
     _.defaults @settings, 

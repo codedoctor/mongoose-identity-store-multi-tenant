@@ -26,6 +26,12 @@ module.exports = class AdminMethods
   Sets up an account ready for use.
   ###
   setup: (accountId,appName, username, email, password,scopes = [], clientId = null, secret = null,options = {}, cb = ->) =>
+    return cb new Error "accountId parameter is required." unless accountId
+    return cb new Error "appName parameter is required." unless appName
+    return cb new Error "username parameter is required." unless username
+    return cb new Error "email parameter is required." unless email
+    return cb new Error "password parameter is required." unless password
+
     if _.isFunction(options)
       cb = options 
       options = {}
@@ -59,7 +65,7 @@ module.exports = class AdminMethods
           clientId = app.clients[0].clientId
           return cb new Error "Failed to create app client" unless clientId
 
-          @oauthAuth.createOrReuseTokenForUserId user._id, clientId, null, null, null, (err, token) =>
+          @oauthAuth.createOrReuseTokenForUserId accountId, user._id, clientId, null, null, null, (err, token) =>
             return cb err if err
             return cb new Error "Failed to create token" unless token
 

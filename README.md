@@ -1,8 +1,10 @@
 TODO:
 
-* use mongooserest where possible (entity, users, oauth-auth)
 * add missing tests
-* look into refresh token
+
+* use mongooserest where possible (entity, users, oauth-auth)
+* look into refresh token / token generation - storgate (reuse tokens)
+* remove expired grants / tokens - expose as function here and run in the server.
 * document
 
 mongoose-identity-store-multi-tenant
@@ -10,10 +12,7 @@ mongoose-identity-store-multi-tenant
 
 npm install mongoose-identity-store-multi-tenant
 
-NOTE - THIS IS EXPERIMENTAL.
-
-
-A bunch of mongoose schemas to implement identity management (users, accesstokens, oauth apps)
+A bunch of mongoose schemas to implement identity management (users, accesstokens, oauth apps) in multi tenant scenarios
 
 This is a work in progress, and some indexes need to be defined. You have been warned
 
