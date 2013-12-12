@@ -36,12 +36,18 @@ module.exports = class AdminMethods
       cb = options 
       options = {}
 
+    accountId = new ObjectId accountId.toString()
+
     adminUser =
       accountId : accountId
       username : username
       password : password
+      displayName: 'ADMIN'
+      roles: ['admin']
       email : email
 
+    # @TODO Check if user exists, if so, do nothing
+    
     @users.create accountId,adminUser,{}, (err, user) =>
       return cb err if err
 
