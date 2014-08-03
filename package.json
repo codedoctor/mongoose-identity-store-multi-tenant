@@ -21,7 +21,7 @@
   ],
   "scripts": {
     "prepublish": "node_modules/.bin/codo -i ./src -o ./docs;node_modules/.bin/grunt coffee",
-    "test": "node_modules/.bin/grunt coffee;NODE_ENV=test node_modules/.bin/mocha --timeout 10000 -R spec test/*.coffee",
+    "test": "node_modules/.bin/grunt testandcoverage",
     "docs": "node_modules/.bin/codo -i ./src -o ./docs"
   },
   "engines": {
@@ -48,18 +48,22 @@
     "oauth2orize": "1.0.0"
   },
   "devDependencies": {
-    "coffee-script": "1.6.3",
-    "should": "2.1.1",
+    "blanket": "1.1.6",
+    "codo": "2.0.9",
+    "coffee-script": "1.7.1",
+    "grunt": "0.4.5",
+    "grunt-cli": "0.1.13",
+    "grunt-contrib-coffee": "0.10.1",
+    "grunt-contrib-watch": "0.6.1",
+    "grunt-env": "0.4.1",
+    "grunt-mocha-cov": "0.2.1",
+    "grunt-mocha-test": "0.11.0",
+    "grunt-release": "0.7.0",
+    "grunt-shell": "0.7.0",
+    "matchdep": "0.3.0",
     "mocha": "1.15.1",
     "mongoskin": "0.6.1",
-    "codo": "2.0.2",
-    "grunt": "0.4.2",
-    "grunt-cli": "0.1.11",
-    "grunt-contrib-clean": "0.5.0",
-    "grunt-contrib-copy": "0.4.1",
-    "grunt-contrib-watch": "0.5.3",
-    "grunt-release": "0.6.0",
-    "grunt-contrib-coffee": "0.7.0"
+    "should": "2.1.1"
   },
   "bugs": {
     "url": "http://github.com/codedoctor/mongoose-identity-store-multi-tenant/issues"
@@ -69,5 +73,13 @@
       "type": "MIT",
       "url": "http://github.com/codedoctor/mongoose-identity-store-multi-tenant/raw/master/LICENSE"
     }
-  ]
+  ],
+  "config": {
+    "blanket": {
+      "pattern": [
+        "lib"
+      ],
+      "data-cover-never": "node_modules"
+    }
+  }
 }

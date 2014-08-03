@@ -1,3 +1,10 @@
+[![Build Status](https://travis-ci.org/codedoctor/mongoose-identity-store-multi-tenant.svg?branch=master)](https://travis-ci.org/codedoctor/mongoose-identity-store-multi-tenant)
+
+[![Coverage Status](https://img.shields.io/coveralls/codedoctor/mongoose-identity-store-multi-tenant.svg)](https://coveralls.io/r/codedoctor/mongoose-identity-store-multi-tenant)
+
+[![NPM Version](http://img.shields.io/npm/v/mongoose-identity-store-multi-tenant.svg)](https://www.npmjs.org/package/mongoose-identity-store-multi-tenant)
+
+
 TODO:
 
 * add missing tests

@@ -61,6 +61,7 @@ uniquely with the HAML document.</p>
   </dt>
   <dd>
     <pre><code class='coffeescript'>{
+
   &#47;*
   Includes a HAML document inside of the current one. Context included
   template is defaulted to the context of this template but may be changed
@@ -71,8 +72,7 @@ uniquely with the HAML document.</p>
   
   @example Include with custom context
     +include &#39;path&#47;to&#47;template&#39;, @context
-  *&#47;
-
+   *&#47;
   include: function(expression) {
     var Compiler, code, compiler, context, e, error, name, source, statement, _ref;
     try {
@@ -89,7 +89,7 @@ uniquely with the HAML document.</p>
         case &#39;global&#39;:
           return &quot;&quot; + this.namespace + &quot;[&#39;&quot; + name + &quot;&#39;](&quot; + context + &quot;)&quot;;
         case &#39;amd&#39;:
-          return &quot;require(&#39;&quot; + name + &quot;&#39;).apply(&quot; + context + &quot;)&quot;;
+          return &quot;require(&#39;&quot; + name + &quot;&#39;)(&quot; + context + &quot;)&quot;;
         case &#39;standalone&#39;:
           if (typeof browser !== &quot;undefined&quot; &amp;&amp; browser !== null ? browser.process : void 0) {
             throw new Error(&quot;Include directive not available in the Browser when placement is standalone.&quot;);
@@ -101,10 +101,10 @@ uniquely with the HAML document.</p>
               console.error(&quot;  Error opening file: %s&quot;, error);
               console.error(error);
             }
+
             &#47;*
             Compile and build the source function.
-            *&#47;
-
+             *&#47;
             Compiler = require(&#39;..&#47;haml-coffee&#39;);
             compiler = new Compiler(this.options);
             compiler.parse(source);
@@ -188,19 +188,17 @@ uniquely with the HAML document.</p>
 </div>
     </div>
     <div id='footer'>
-  December 12, 13 10:48:49 by
+  August 03, 14 08:40:48 by
   <a href='https://github.com/coffeedoc/codo' title='CoffeeScript API documentation generator'>
     Codo
   </a>
-  2.0.2
+  2.0.9
   &#10034;
   Press H to see the keyboard shortcuts
   &#10034;
   <a href='http://twitter.com/netzpirat' target='_parent'>@netzpirat</a>
   &#10034;
   <a href='http://twitter.com/_inossidabile' target='_parent'>@_inossidabile</a>
-  &#10034;
-  <a href='https://mksoft.ch' target='_parent'>mksoft.ch</a>
 </div>
 <iframe id='search_frame'></iframe>
 <div id='fuzzySearch'>
