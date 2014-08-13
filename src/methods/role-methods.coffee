@@ -23,7 +23,7 @@ module.exports = class RoleMethods
     mongooseRestHelper.all @models.Role,settings,options, cb
 
   ###
-  Get a role for it's id.
+  Get a role for its id.
   ###
   get: (roleId,options = {}, cb = ->) =>
     return cb new Error "roleId parameter is required." unless roleId
@@ -31,7 +31,7 @@ module.exports = class RoleMethods
 
 
   ###
-  Completely destroys an organization.
+  Completely destroys a role.
   ###
   destroy: (roleId, options = {}, cb = ->) =>
     return cb new Error "roleId parameter is required." unless roleId
@@ -40,7 +40,7 @@ module.exports = class RoleMethods
 
 
   ###
-  Create a new processDefinition
+  Create a new role.
   ###
   create:(accountId,objs = {}, options = {}, cb = ->) =>
     return cb new Error "accountId parameter is required." unless accountId
@@ -50,13 +50,13 @@ module.exports = class RoleMethods
 
 
   ###
-  Updates a deployment
+  Updates a role.
   ###
-  patch: (scopeId, obj = {}, options = {}, cb = ->) =>
+  patch: (roleId, obj = {}, options = {}, cb = ->) =>
     return cb new Error "scopeId parameter is required." unless scopeId
     settings =
       exclude : UPDATE_EXCLUDEFIELDS
-    mongooseRestHelper.patch @models.Role,scopeId, settings, obj, options, cb
+    mongooseRestHelper.patch @models.Role,roleId, settings, obj, options, cb
 
 
 
